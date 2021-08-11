@@ -7,7 +7,7 @@ import cga.framework.GameWindow
 /**
  * Extends Transformable such that the object can render Mesh objects transformed by Transformable
  */
-open abstract class Renderable(val meshes: MutableList<Mesh> = mutableListOf()) : Transformable(parent = null), IRenderable {
+open abstract class Renderable() : Transformable(parent = null), IRenderable {
     protected var myShader: ShaderProgram = ShaderProgram("assets/shaders/tron_vert.glsl", "assets/shaders/tron_frag.glsl")
     var myMeshes : MutableList<Mesh> = mutableListOf()
 
