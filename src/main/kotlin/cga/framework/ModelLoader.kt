@@ -134,7 +134,7 @@ object ModelLoader {
         return data
     }
 
-    fun loadModel(objpath: String, pitch: Float, yaw: Float, roll: Float): Renderable? {
+    fun loadModel(objpath: String, pitch: Float, yaw: Float, roll: Float): ArrayList<Mesh>? {
         val model = load(objpath) ?: return null
         val textures = ArrayList<Texture2D>()
         val materials = ArrayList<Material>()
@@ -174,6 +174,6 @@ object ModelLoader {
                     materials[model.meshes[i].materialIndex]))
         }
         // assemble the renderable
-        return Renderable(meshes)
+        return meshes
     }
 }
