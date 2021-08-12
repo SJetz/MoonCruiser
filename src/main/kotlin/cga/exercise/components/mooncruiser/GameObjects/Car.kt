@@ -53,7 +53,7 @@ class Car() : Renderable() {
         carSpotLight = SpotLight(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 1.0f, -2.0f), Math.toRadians(20.0f), Math.toRadians(30.0f))
         carSpotLight.rotateLocal(Math.toRadians(-10.0f), Math.PI.toFloat(), 0.0f)
         carSpotLight.parent = this
-        groundColor = Vector3f(1.0f, 0.0f, 1.0f)
+        groundColor = Vector3f(0.0f, 1.0f, 1.0f)
         carPointLight2 = PointLight(Vector3f(0.0f, 2.0f, 2.0f), Vector3f(-10.0f, 2.0f, -10.0f))
         carPointLight3 = PointLight(Vector3f(2.0f, 0.0f, 0.0f), Vector3f(10.0f, 2.0f, 10.0f))
     }

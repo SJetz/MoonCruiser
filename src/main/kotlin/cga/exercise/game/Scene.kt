@@ -6,6 +6,7 @@ import cga.exercise.components.light.PointLight
 import cga.exercise.components.light.SpotLight
 import cga.exercise.components.mooncruiser.GameObjects.Car
 import cga.exercise.components.mooncruiser.GameObjects.Ground
+import cga.exercise.components.mooncruiser.GameObjects.Skybox
 import cga.exercise.components.mooncruiser.ObjectManager
 import cga.exercise.components.shader.ShaderProgram
 import cga.framework.GLError
@@ -62,6 +63,12 @@ class Scene(private val window: GameWindow) {
         objectManager.addObject(car)
         car.setShader(staticShader)
         camera.parent = car
+
+        var skybox = Skybox()
+        skybox.init(camera)
+        objectManager.addObject(skybox)
+        skybox.setShader(staticShader)
+
 
         //initial opengl state
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f); GLError.checkThrow()

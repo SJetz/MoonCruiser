@@ -31,5 +31,8 @@ open class Renderable() : Transformable(parent = null), IRenderable {
         myShader = shader
     }
 
-    override fun init(camera: TronCamera){}
+    override fun init(camera: TronCamera){
+        myCamera = camera
+
+    }
 }
