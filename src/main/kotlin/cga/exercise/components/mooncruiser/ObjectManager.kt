@@ -32,9 +32,9 @@ class ObjectManager {
         listToRemove.clear()
     }
 
-    fun render (){
+    fun render (dt: Float, t: Float){
         for (i in listOfGameObjects){
-            i.render()
+            i.render(dt, t)
         }
     }
 }

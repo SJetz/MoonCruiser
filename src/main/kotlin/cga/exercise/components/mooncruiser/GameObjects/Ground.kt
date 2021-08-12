@@ -1,5 +1,6 @@
 package cga.exercise.components.mooncruiser.GameObjects
 
+import cga.exercise.components.camera.TronCamera
 import cga.exercise.components.geometry.Material
 import cga.exercise.components.geometry.Mesh
 import cga.exercise.components.geometry.Renderable
@@ -12,11 +13,11 @@ import org.lwjgl.opengl.GL11
 
 class Ground : Renderable(){
 
-    //private val groundShader : ShaderProgram = ShaderProgram("assets/shaders/tron_vert.glsl", "assets/shaders/tron_frag.glsl")
+
 
     override fun update(dt: Float, window: GameWindow) {}
 
-    override fun init() {
+    override fun init(camera: TronCamera) {
         //load textures
         val groundDiff = Texture2D("assets/textures/ground_diff.png", true)
         groundDiff.setTexParams(GL11.GL_REPEAT, GL11.GL_REPEAT, GL11.GL_LINEAR_MIPMAP_LINEAR, GL11.GL_LINEAR)

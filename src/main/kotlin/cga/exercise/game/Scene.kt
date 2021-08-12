@@ -26,17 +26,8 @@ class Scene(private val window: GameWindow) {
     //shader
     private val staticShader = ShaderProgram("assets/shaders/tron_vert.glsl", "assets/shaders/tron_frag.glsl")
 
-    //lights
-    private val bikePointLight: PointLight
-    private val bikeSpotLight: SpotLight
-
-    private val groundColor: Vector3f
-
-    private val bikePointLight2: PointLight
-    private val bikePointLight3: PointLight
-
     //camera
-    private val camera: TronCamera
+    val camera : TronCamera
 
     //mouse
     private var oldMouseX = 0.0
@@ -45,44 +36,32 @@ class Scene(private val window: GameWindow) {
 
     //scene setup
     init {
-        //init objectmanager
-        objectManager = ObjectManager()
-
-        //init gameobjects and assigne to objectmanager and set shaders
-        var ground = Ground()
-        ground.init()
-        objectManager.addObject(ground)
-        ground.setShader(staticShader)
-
-        var car = Car()
-        car.init()
-        objectManager.addObject(car)
-        car.setShader(staticShader)
-
         //setup camera
         camera = TronCamera(
-                custom(window.framebufferWidth, window.framebufferHeight),
-                Math.toRadians(90.0f),
-                0.1f,
-                100.0f
+            custom(window.framebufferWidth, window.framebufferHeight),
+            Math.toRadians(90.0f),
+            0.1f,
+            100.0f
         )
-        camera.parent = car
 
         //move camera a little bit in z direction
         camera.rotateLocal(Math.toRadians(-35.0f), 0.0f, 0.0f)
         camera.translateLocal(Vector3f(0.0f, 0.0f, 4.0f))
 
-        //bike point light
-        bikePointLight = PointLight(Vector3f(0.0f, 2.0f, 0.0f), Vector3f(0.0f, 0.5f, 0.0f))
-        bikePointLight.parent = car
+        //init objectmanager
+        objectManager = ObjectManager()
 
-        //bike spot light
-        bikeSpotLight = SpotLight(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 1.0f, -2.0f), Math.toRadians(20.0f), Math.toRadians(30.0f))
-        bikeSpotLight.rotateLocal(Math.toRadians(-10.0f), Math.PI.toFloat(), 0.0f)
-        bikeSpotLight.parent = car
-        groundColor = Vector3f(1.0f, 0.0f, 1.0f)
-        bikePointLight2 = PointLight(Vector3f(0.0f, 2.0f, 2.0f), Vector3f(-10.0f, 2.0f, -10.0f))
-        bikePointLight3 = PointLight(Vector3f(2.0f, 0.0f, 0.0f), Vector3f(10.0f, 2.0f, 10.0f))
+        //init gameobjects and assigne to objectmanager and set shaders
+        var ground = Ground()
+        ground.init(camera)
+        objectManager.addObject(ground)
+        ground.setShader(staticShader)
+
+        var car = Car()
+        car.init(camera)
+        objectManager.addObject(car)
+        car.setShader(staticShader)
+        camera.parent = car
 
         //initial opengl state
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f); GLError.checkThrow()
@@ -95,19 +74,10 @@ class Scene(private val window: GameWindow) {
     fun render(dt: Float, t: Float) {
         glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
 
-        objectManager.render()
+        objectManager.render(dt,t)
 
-        //staticShader.use()
-
+        staticShader.use()
         camera.bind(staticShader)
-        val changingColor = Vector3f(Math.abs(Math.sin(t)), 0f, Math.abs(Math.cos(t)))
-        bikePointLight.lightColor = changingColor
-        staticShader.setUniform("shadingColor", changingColor)
-        bikePointLight.bind(staticShader, "bikePointLight")
-        bikePointLight2.bind(staticShader, "bikePointLight2")
-        bikePointLight3.bind(staticShader, "bikePointLight3")
-        bikeSpotLight.bind(staticShader, "bikeSpotLight", camera.calculateViewMatrix())
-        staticShader.setUniform("shadingColor", groundColor)
 
     }
 

@@ -1,5 +1,6 @@
 package cga.exercise.components.geometry
 
+import cga.exercise.components.camera.TronCamera
 import cga.exercise.components.shader.ShaderProgram
 import cga.framework.GameWindow
 
@@ -10,12 +11,13 @@ import cga.framework.GameWindow
 open class Renderable() : Transformable(parent = null), IRenderable {
     var myMeshes: MutableList<Mesh> = mutableListOf()
     var myShader: ShaderProgram = ShaderProgram("assets/shaders/tron_vert.glsl", "assets/shaders/tron_frag.glsl")
+    lateinit var myCamera : TronCamera
 
     /**
      * Renders all meshes attached to this Renderable, applying the transformation matrix to
      * each of them
      */
-    override fun render() {
+    override fun render(dt: Float, t: Float) {
         myShader.use()
         myShader.setUniform("model_matrix", getWorldModelMatrix(), false)
         for (m in myMeshes) {
@@ -29,5 +31,5 @@ open class Renderable() : Transformable(parent = null), IRenderable {
         myShader = shader
     }
 
-    override fun init(){}
+    override fun init(camera: TronCamera){}
 }
