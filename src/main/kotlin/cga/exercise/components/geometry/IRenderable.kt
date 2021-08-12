@@ -6,8 +6,7 @@ import java.awt.Window
 
 interface IRenderable {
     fun render()
-    abstract fun update(dt: Float, window: GameWindow)
+    fun update(dt: Float, window: GameWindow)
     fun setShader(shaderProgram: ShaderProgram)
-    abstract fun init()
-
+    fun init()
 }

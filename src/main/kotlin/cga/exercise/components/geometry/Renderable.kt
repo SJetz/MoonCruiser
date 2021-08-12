@@ -7,9 +7,9 @@ import cga.framework.GameWindow
 /**
  * Extends Transformable such that the object can render Mesh objects transformed by Transformable
  */
-open abstract class Renderable() : Transformable(parent = null), IRenderable {
-    protected var myShader: ShaderProgram = ShaderProgram("assets/shaders/tron_vert.glsl", "assets/shaders/tron_frag.glsl")
-    var myMeshes : MutableList<Mesh> = mutableListOf()
+open class Renderable() : Transformable(parent = null), IRenderable {
+    var myMeshes: MutableList<Mesh> = mutableListOf()
+    var myShader: ShaderProgram = ShaderProgram("assets/shaders/tron_vert.glsl", "assets/shaders/tron_frag.glsl")
 
     /**
      * Renders all meshes attached to this Renderable, applying the transformation matrix to
@@ -23,12 +23,11 @@ open abstract class Renderable() : Transformable(parent = null), IRenderable {
         }
     }
 
-    abstract override fun update(dt: Float, window: GameWindow)
+    override fun update(dt: Float, window: GameWindow){}
 
-
-    override fun setShader(shaderProgram: ShaderProgram) {
-        myShader = shaderProgram
+    override fun setShader(shader: ShaderProgram) {
+        myShader = shader
     }
 
-    abstract override fun init()
+    override fun init(){}
 }

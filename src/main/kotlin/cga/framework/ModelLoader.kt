@@ -134,7 +134,7 @@ object ModelLoader {
         return data
     }
 
-    fun loadModel(objpath: String, pitch: Float, yaw: Float, roll: Float): ArrayList<Mesh>? {
+    fun loadModel(objpath: String, pitch: Float, yaw: Float, roll: Float): MutableList<Mesh>? {
         val model = load(objpath) ?: return null
         val textures = ArrayList<Texture2D>()
         val materials = ArrayList<Material>()
