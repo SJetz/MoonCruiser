@@ -18,7 +18,7 @@ class PowerUp : Renderable() {
     var rotateVector = Vector3f(1f,1f,1f)
 
     override fun update(dt: Float, window: GameWindow) {
-            rotateLocal(0f, 0f, 0f)
+            rotateLocal(dt, dt, dt)
             rotateAroundPoint(0f, 0f, 0f, rotateVector)
     }
 

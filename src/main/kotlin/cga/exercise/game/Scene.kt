@@ -11,6 +11,7 @@ import cga.framework.GLError
 import cga.framework.GameWindow
 import org.joml.Math
 import org.joml.Vector3f
+import org.joml.Vector4f
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.opengl.GL11.*
 
@@ -26,6 +27,9 @@ class Scene(private val window: GameWindow) {
 
     //shader
     private val staticShader = ShaderProgram("assets/shaders/tron_vert.glsl", "assets/shaders/tron_frag.glsl")
+    private val toonShader = ShaderProgram("assets/shaders/toon_vert.glsl", "assets/shaders/toon_pixel.glsl")
+    private val simpleShader = ShaderProgram("assets/shaders/simple_vert.glsl", "assets/shaders/simple_frag.glsl")
+
 
     //camera
     val camera : TronCamera
@@ -44,6 +48,30 @@ class Scene(private val window: GameWindow) {
             0.1f,
             100.0f
         )
+/*
+        //create light
+       var direction = Vector3f(0.2f,-0.5f,-1.0f)
+        var intensity = 1
+        var diffuse = Vector4f(1f,1f,1f,1f)
+        var color = Vector4f(1f,1f,1f,1f)
+        var ambientcolor = Vector4f(0.4f,0.4f,0.4f,1f)
+        var specularcolor = Vector4f(0.75f,0.75f,0.75f,1f)
+        var glossines = 32f
+        var rimcolor = Vector4f(1f,1f,1f,1f)
+        var rimamount = 0.716f
+        var rimthreshhold = 0.1f
+
+        toonShader.setUniform("direction",direction)
+        toonShader.setUniform("intensity",intensity)
+        toonShader.setUniform("diffuse", diffuse)
+        toonShader.setUniform("color",color)
+        toonShader.setUniform("ambientcolor",ambientcolor)
+        toonShader.setUniform("specularcolor",specularcolor)
+        toonShader.setUniform("glossiness", glossines)
+        toonShader.setUniform("rimcolor", rimcolor)
+        toonShader.setUniform("rimamount", rimamount)
+        toonShader.setUniform("rimthreshhold", rimthreshhold)
+*/
 
         //move camera a little bit in z direction
         camera.rotateLocal(Math.toRadians(-35.0f), 0.0f, 0.0f)
