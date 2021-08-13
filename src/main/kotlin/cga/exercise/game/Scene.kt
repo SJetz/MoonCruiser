@@ -4,9 +4,7 @@ import cga.exercise.components.camera.Aspectratio.Companion.custom
 import cga.exercise.components.camera.TronCamera
 import cga.exercise.components.light.PointLight
 import cga.exercise.components.light.SpotLight
-import cga.exercise.components.mooncruiser.GameObjects.Car
-import cga.exercise.components.mooncruiser.GameObjects.Ground
-import cga.exercise.components.mooncruiser.GameObjects.Skybox
+import cga.exercise.components.mooncruiser.GameObjects.*
 import cga.exercise.components.mooncruiser.ObjectManager
 import cga.exercise.components.shader.ShaderProgram
 import cga.framework.GLError
@@ -20,6 +18,8 @@ import org.lwjgl.opengl.GL11.*
  * Created by Fabian on 16.09.2017.
  */
 class Scene(private val window: GameWindow) {
+
+    var car = Car()
 
     //obecjtmanger
     private val objectManager : ObjectManager
@@ -69,6 +69,15 @@ class Scene(private val window: GameWindow) {
         objectManager.addObject(skybox)
         skybox.setShader(staticShader)
 
+        var debuff = Debuff()
+        debuff.init(camera)
+        objectManager.addObject(debuff)
+        debuff.setShader(staticShader)
+
+        var powerup = PowerUp()
+        powerup.init(camera)
+        objectManager.addObject(powerup)
+        powerup.setShader(staticShader)
 
         //initial opengl state
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f); GLError.checkThrow()
@@ -99,7 +108,7 @@ class Scene(private val window: GameWindow) {
             val yawangle = (xpos - oldMouseX).toFloat() * 0.002f
             val pitchangle = (ypos - oldMouseY).toFloat() * 0.0005f
             if (!window.getKeyState(GLFW_KEY_LEFT_ALT)) {
-                //bike.rotateLocal(0.0f, yawangle, 0.0f)
+                car.rotateLocal(0.0f, yawangle, 0.0f)
             }
             else{
                 camera.rotateAroundPoint(0.0f, yawangle, 0.0f, Vector3f(0.0f, 0.0f, 0.0f))

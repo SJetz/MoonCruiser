@@ -38,6 +38,7 @@ class Car() : Renderable() {
             rotateLocal(Math.PI.toFloat() * dt, 0.0f, 0.0f)
         }
 
+
     }
 
     override fun init(carCam: TronCamera) {
