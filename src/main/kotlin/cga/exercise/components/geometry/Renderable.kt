@@ -1,14 +1,16 @@
 package cga.exercise.components.geometry
 
 import cga.exercise.components.camera.TronCamera
+import cga.exercise.components.mooncruiser.physic.Cube
 import cga.exercise.components.shader.ShaderProgram
 import cga.framework.GameWindow
+import org.joml.Vector3f
 
 
 /**
  * Extends Transformable such that the object can render Mesh objects transformed by Transformable
  */
-open class Renderable() : Transformable(parent = null), IRenderable {
+open class Renderable() : Cube(pos = Vector3f()), IRenderable {
     var myMeshes: MutableList<Mesh> = mutableListOf()
     var myShader: ShaderProgram = ShaderProgram("assets/shaders/tron_vert.glsl", "assets/shaders/tron_frag.glsl")
     lateinit var myCamera : TronCamera

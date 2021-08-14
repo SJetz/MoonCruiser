@@ -6,7 +6,7 @@ import org.joml.Vector3f
 
 open class Transformable(var modelMatrix: Matrix4f = Matrix4f(), var parent: Transformable? = null): ITransformable {
 
-    var cube = Cube(Vector3f(0f,0f,0f))
+
 
     /**
      * Rotates object around its own origin.
