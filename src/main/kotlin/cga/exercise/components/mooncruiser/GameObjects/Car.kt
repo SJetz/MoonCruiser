@@ -1,4 +1,4 @@
-package cga.exercise.components.mooncruiser.gameObjects
+package cga.exercise.components.mooncruiser.GameObjects
 
 import cga.exercise.components.camera.TronCamera
 import cga.exercise.components.geometry.Renderable
@@ -6,7 +6,6 @@ import cga.exercise.components.light.PointLight
 import cga.exercise.components.light.SpotLight
 import cga.framework.GameWindow
 import cga.framework.ModelLoader
-import cga.framework.OBJLoader
 import org.joml.Math
 import org.joml.Vector3f
 import org.lwjgl.glfw.GLFW
@@ -21,7 +20,6 @@ class Car() : Renderable() {
     lateinit var carPointLight3 : PointLight
 
     override fun update(dt: Float, window: GameWindow) {
-        //geschwindigkeit
         val movemul = 5.0f
         val rotatemul = 2.0f
         if (window.getKeyState(GLFW.GLFW_KEY_W)) {
@@ -30,23 +28,21 @@ class Car() : Renderable() {
         if (window.getKeyState(GLFW.GLFW_KEY_S)) {
             translateLocal(Vector3f(0.0f, 0.0f, dt * movemul))
         }
-        if (window.getKeyState(GLFW.GLFW_KEY_A) and window.getKeyState(GLFW.GLFW_KEY_W )) {
+        if (window.getKeyState(GLFW.GLFW_KEY_A) and window.getKeyState(GLFW.GLFW_KEY_W)) {
             rotateLocal(0.0f, dt * rotatemul, 0.0f)
         }
         if (window.getKeyState(GLFW.GLFW_KEY_D) and window.getKeyState(GLFW.GLFW_KEY_W)) {
             rotateLocal( 0.0f, -dt * rotatemul,0.0f)
         }
-        if (window.getKeyState(GLFW.GLFW_KEY_D) and window.getKeyState(GLFW.GLFW_KEY_S)) {
-            rotateLocal( 0.0f, dt * rotatemul,0.0f)
-        }
         if (window.getKeyState(GLFW.GLFW_KEY_A) and window.getKeyState(GLFW.GLFW_KEY_S)) {
+            rotateLocal(0.0f, dt * rotatemul, 0.0f)
+        }
+        if (window.getKeyState(GLFW.GLFW_KEY_D) and window.getKeyState(GLFW.GLFW_KEY_S)) {
             rotateLocal( 0.0f, -dt * rotatemul,0.0f)
         }
-        /*F Key später für Scheinwerfer an/aus
-        if (window.getKeyState(GLFW.GLFW_KEY_F)) {
+        /*if (window.getKeyState(GLFW.GLFW_KEY_F)) {
             rotateLocal(Math.PI.toFloat() * dt, 0.0f, 0.0f)
         }*/
-
 
 
     }

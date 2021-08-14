@@ -1,4 +1,4 @@
-package cga.exercise.components.mooncruiser.gameObjects
+package cga.exercise.components.mooncruiser.GameObjects
 
 import cga.exercise.components.camera.TronCamera
 import cga.exercise.components.geometry.*
