@@ -2,6 +2,8 @@ package cga.exercise.game
 
 import cga.exercise.components.camera.Aspectratio.Companion.custom
 import cga.exercise.components.camera.TronCamera
+import cga.exercise.components.light.PointLight
+import cga.exercise.components.light.SpotLight
 import cga.exercise.components.mooncruiser.GameObjects.*
 import cga.exercise.components.mooncruiser.ObjectManager
 import cga.exercise.components.shader.ShaderProgram
@@ -9,6 +11,7 @@ import cga.framework.GLError
 import cga.framework.GameWindow
 import org.joml.Math
 import org.joml.Vector3f
+import org.joml.Vector4f
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.opengl.GL11.*
 
@@ -24,8 +27,8 @@ class Scene(private val window: GameWindow) {
 
     //shader
     private val staticShader = ShaderProgram("assets/shaders/tron_vert.glsl", "assets/shaders/tron_frag.glsl")
-    private val toonShader = ShaderProgram("assets/shaders/toon_vert.glsl", "assets/shaders/toon_pixel.glsl")
     private val simpleShader = ShaderProgram("assets/shaders/simple_vert.glsl", "assets/shaders/simple_frag.glsl")
+    private val toonShader = ShaderProgram("assets/shaders/toon_vert.glsl", "assets/shaders/toon_frag.glsl")
 
     //camera
     val camera : TronCamera
@@ -44,30 +47,6 @@ class Scene(private val window: GameWindow) {
             0.1f,
             100.0f
         )
-/*
-        //create light
-       var direction = Vector3f(0.2f,-0.5f,-1.0f)
-        var intensity = 1
-        var diffuse = Vector4f(1f,1f,1f,1f)
-        var color = Vector4f(1f,1f,1f,1f)
-        var ambientcolor = Vector4f(0.4f,0.4f,0.4f,1f)
-        var specularcolor = Vector4f(0.75f,0.75f,0.75f,1f)
-        var glossines = 32f
-        var rimcolor = Vector4f(1f,1f,1f,1f)
-        var rimamount = 0.716f
-        var rimthreshhold = 0.1f
-
-        toonShader.setUniform("direction",direction)
-        toonShader.setUniform("intensity",intensity)
-        toonShader.setUniform("diffuse", diffuse)
-        toonShader.setUniform("color",color)
-        toonShader.setUniform("ambientcolor",ambientcolor)
-        toonShader.setUniform("specularcolor",specularcolor)
-        toonShader.setUniform("glossiness", glossines)
-        toonShader.setUniform("rimcolor", rimcolor)
-        toonShader.setUniform("rimamount", rimamount)
-        toonShader.setUniform("rimthreshhold", rimthreshhold)
-*/
 
         //move camera a little bit in z direction
         camera.rotateLocal(Math.toRadians(-35.0f), 0.0f, 0.0f)
@@ -80,28 +59,29 @@ class Scene(private val window: GameWindow) {
         var ground = Ground()
         ground.init(camera)
         objectManager.addObject(ground)
-        ground.setShader(staticShader)
+        ground.setShader(toonShader)
 
         var car = Car()
         car.init(camera)
         objectManager.addObject(car)
-        car.setShader(staticShader)
+        car.setShader(toonShader)
         camera.parent = car
 
         var skybox = Skybox()
         skybox.init(camera)
         objectManager.addObject(skybox)
-        skybox.setShader(staticShader)
+        skybox.setShader(toonShader)
 
         var debuff = Debuff()
         debuff.init(camera)
         objectManager.addObject(debuff)
-        debuff.setShader(staticShader)
+        debuff.setShader(toonShader)
 
         var powerup = PowerUp()
         powerup.init(camera)
         objectManager.addObject(powerup)
-        powerup.setShader(staticShader)
+        powerup.setShader(toonShader)
+
 
         //initial opengl state
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f); GLError.checkThrow()
@@ -116,10 +96,12 @@ class Scene(private val window: GameWindow) {
 
         objectManager.render(dt,t)
 
-        staticShader.use()
-        camera.bind(staticShader)
+        toonShader.use()
+        camera.bind(toonShader)
 
     }
+
+
 
     fun update(dt: Float, t: Float) { //camera update
         objectManager.update(dt,window)

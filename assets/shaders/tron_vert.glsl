@@ -34,10 +34,12 @@ void main(){
     mat4 modelview = view_matrix * model_matrix;
     vec4 viewpos = modelview * vec4(position, 1.0f);
     vertexData.toCamera = -viewpos.xyz;
+
     vertexData.toBikePointLight = (view_matrix * vec4(bikePointLightPosition, 1.0)).xyz - viewpos.xyz;
     vertexData.toBikePointLight2 = (view_matrix * vec4(bikePointLight2Position, 1.0)).xyz - viewpos.xyz;
     vertexData.toBikePointLight3 = (view_matrix * vec4(bikePointLight3Position, 1.0)).xyz - viewpos.xyz;
     vertexData.toBikeSpotLight = (view_matrix * vec4(bikeSpotLightPosition, 1.0)).xyz - viewpos.xyz;
+
     gl_Position = proj_matrix * viewpos;
 
     vertexData.normal = (inverse(transpose(modelview)) * vec4(normal, 0.0f)).xyz;
