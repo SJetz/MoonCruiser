@@ -7,13 +7,13 @@ class CollisionsDetection {
 
     companion object Foo {
         fun CubeinCube(cube1 : Cube, cube2 : Cube): Boolean {
-            var a1 = (cube1.myVerticies[0].sub(cube1.myVerticies[1]))
-            var a2 = (cube1.myVerticies[0].sub(cube1.myVerticies[3]))
-            var a3 = (cube1.myVerticies[0].sub(cube1.myVerticies[4]))
+            var a1 = (cube1.myVertices[0].sub(cube1.myVertices[1]))
+            var a2 = (cube1.myVertices[0].sub(cube1.myVertices[3]))
+            var a3 = (cube1.myVertices[0].sub(cube1.myVertices[4]))
 
-            var b1 = (cube2.myVerticies[0].sub(cube2.myVerticies[1]))
-            var b2 = (cube2.myVerticies[0].sub(cube2.myVerticies[3]))
-            var b3 = (cube2.myVerticies[0].sub(cube2.myVerticies[4]))
+            var b1 = (cube2.myVertices[0].sub(cube2.myVertices[1]))
+            var b2 = (cube2.myVertices[0].sub(cube2.myVertices[3]))
+            var b3 = (cube2.myVertices[0].sub(cube2.myVertices[4]))
 
             var vectors :Array<Vector3f> = arrayOf()
 
@@ -45,8 +45,8 @@ class CollisionsDetection {
                 var maxB = Float.NEGATIVE_INFINITY
                 var i : Int = 0
                 while(i < 8){
-                    var fA = vectors[j].dot(cube1.myVerticies[i])
-                    var fB = vectors[j].dot(cube2.myVerticies[i])
+                    var fA = vectors[j].dot(cube1.myVertices[i])
+                    var fB = vectors[j].dot(cube2.myVertices[i])
 
                     if (fA <= minA)
                         minA = fA
