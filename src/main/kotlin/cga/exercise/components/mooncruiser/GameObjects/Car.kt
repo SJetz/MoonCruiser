@@ -4,6 +4,7 @@ import cga.exercise.components.camera.TronCamera
 import cga.exercise.components.geometry.Renderable
 import cga.exercise.components.light.PointLight
 import cga.exercise.components.light.SpotLight
+import cga.exercise.components.mooncruiser.physic.PhysicManager
 import cga.framework.GameWindow
 import cga.framework.ModelLoader
 import org.joml.Math
@@ -44,6 +45,9 @@ class Car() : Renderable() {
     }
 
     override fun init(carCam: TronCamera) {
+        PhysicManager.listOfAllCubes.add(this)
+        this.collider = true
+
         myCamera = carCam
         super.myMeshes = ModelLoader.loadModel("assets/Light Cycle/Light Cycle/HQ_Movie cycle.obj", Math.toRadians(-90.0f), Math.toRadians(90.0f), 0.0f) ?: throw IllegalArgumentException("Could not load the model")
         this.scaleLocal(Vector3f(0.8f, 0.8f, 0.8f))

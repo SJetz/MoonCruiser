@@ -7,15 +7,16 @@ import org.joml.Vector3f
 open class Cube(pos: Vector3f) : Transformable(){
     lateinit var myVertices : Array<Vector3f>
     private var defaultSize : Vector3f = Vector3f(1f,1f,1f)
-    var openList = mutableListOf<Cube>()
-    var closedList = mutableListOf<Cube>()
     var globalPosition : Vector3f = Vector3f()
     var globalRotation : Matrix4f = Matrix4f()
     var formerSize : Vector3f = Vector3f(1f,1f,1f)
     var formerPosition : Vector3f = Vector3f(0f,0f,0f)
+    var trigger : Boolean = false
+    var collider : Boolean = false
 
 init {
         setPosition(pos)
+
     }
 
     private fun setPosition(position: Vector3f){
@@ -47,6 +48,10 @@ init {
     }
 
     override fun scaleLocal(scale: Vector3f) {
+        if (!collider && !trigger){
+            super.scaleLocal(scale)
+            return
+        }
         defaultSize = scale
         setPosition(globalPosition)
         if (!PhysicManager.checkCollision(this)){
@@ -61,6 +66,10 @@ init {
     }
 
     override fun translateGlobal(deltaPos: Vector3f) {
+        if (!collider && !trigger){
+            super.scaleLocal(deltaPos)
+            return
+        }
         globalPosition = globalPosition.add(deltaPos)
         setPosition(globalPosition)
         if (!PhysicManager.checkCollision(this)){
@@ -71,6 +80,10 @@ init {
     }
 
     override fun translateLocal(deltaPos: Vector3f) {
+        if (!collider && !trigger){
+            super.translateLocal(deltaPos)
+            return
+        }
         globalPosition = globalPosition.add(deltaPos)
         setPosition(globalPosition)
         if (!PhysicManager.checkCollision(this)){

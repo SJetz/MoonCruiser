@@ -2,6 +2,7 @@ package cga.exercise.components.mooncruiser.GameObjects
 
 import cga.exercise.components.camera.TronCamera
 import cga.exercise.components.geometry.*
+import cga.exercise.components.mooncruiser.physic.PhysicManager
 import cga.exercise.components.texture.Texture2D
 import cga.framework.GameWindow
 import cga.framework.Vertex
@@ -11,7 +12,7 @@ import org.lwjgl.opengl.GL11
 
 class Debuff : Renderable() {
 
-    var translateVector = Vector3f(1f,1f,1f)
+    var translateVector = Vector3f(5f,1f,1f)
     var rotateVector = Vector3f(1f,1f,1f)
 
     override fun update(dt: Float, window: GameWindow) {
@@ -20,6 +21,9 @@ class Debuff : Renderable() {
     }
 
     override fun init(camera: TronCamera) {
+        PhysicManager.listOfAllCubes.add(this)
+        this.trigger = true
+
         super.init(camera)
         var vertexArray: MutableList<Vertex> = mutableListOf()
 

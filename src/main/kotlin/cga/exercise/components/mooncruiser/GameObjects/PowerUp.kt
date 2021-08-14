@@ -5,6 +5,7 @@ import cga.exercise.components.geometry.Material
 import cga.exercise.components.geometry.Mesh
 import cga.exercise.components.geometry.Renderable
 import cga.exercise.components.geometry.VertexAttribute
+import cga.exercise.components.mooncruiser.physic.PhysicManager
 import cga.exercise.components.texture.Texture2D
 import cga.framework.GameWindow
 import cga.framework.Vertex
@@ -14,7 +15,7 @@ import org.lwjgl.opengl.GL11
 
 class PowerUp : Renderable() {
 
-    var translateVector = Vector3f(5f,2f,1f)
+    var translateVector = Vector3f(10f,2f,1f)
     var rotateVector = Vector3f(1f,1f,1f)
 
     override fun update(dt: Float, window: GameWindow) {
@@ -23,6 +24,9 @@ class PowerUp : Renderable() {
     }
 
     override fun init(camera: TronCamera) {
+        PhysicManager.listOfAllCubes.add(this)
+        this.trigger = true
+
         super.init(camera)
         var vertexArray: MutableList<Vertex> = mutableListOf()
 
