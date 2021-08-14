@@ -82,7 +82,6 @@ class Scene(private val window: GameWindow) {
         objectManager.addObject(powerup)
         powerup.setShader(toonShader)
 
-
         //initial opengl state
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f); GLError.checkThrow()
         glDisable(GL_CULL_FACE); GLError.checkThrow()

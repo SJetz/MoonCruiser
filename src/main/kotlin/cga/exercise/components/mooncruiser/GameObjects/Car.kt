@@ -40,10 +40,6 @@ class Car() : Renderable() {
         if (window.getKeyState(GLFW.GLFW_KEY_D) and window.getKeyState(GLFW.GLFW_KEY_S)) {
             rotateLocal( 0.0f, -dt * rotatemul,0.0f)
         }
-        /*if (window.getKeyState(GLFW.GLFW_KEY_F)) {
-            rotateLocal(Math.PI.toFloat() * dt, 0.0f, 0.0f)
-        }*/
-
 
     }
 
