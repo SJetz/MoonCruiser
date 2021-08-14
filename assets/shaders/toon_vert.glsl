@@ -53,8 +53,6 @@ void main(){
     vertexData.normal = (inverse(transpose(modelview)) * vec4(normal, 0.0f)).xyz;
     vertexData.textureCoordinate = textureCoordinate * tcMultiplier;
 
-
-
     vertexData.todirection = direction;
     vertexData.tointensity = intensity;
     vertexData.todiffuse = diffuse;

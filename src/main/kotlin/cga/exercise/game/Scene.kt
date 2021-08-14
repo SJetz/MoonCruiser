@@ -2,16 +2,13 @@ package cga.exercise.game
 
 import cga.exercise.components.camera.Aspectratio.Companion.custom
 import cga.exercise.components.camera.TronCamera
-import cga.exercise.components.light.PointLight
-import cga.exercise.components.light.SpotLight
-import cga.exercise.components.mooncruiser.GameObjects.*
+import cga.exercise.components.mooncruiser.gameObjects.*
 import cga.exercise.components.mooncruiser.ObjectManager
 import cga.exercise.components.shader.ShaderProgram
 import cga.framework.GLError
 import cga.framework.GameWindow
 import org.joml.Math
 import org.joml.Vector3f
-import org.joml.Vector4f
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.opengl.GL11.*
 

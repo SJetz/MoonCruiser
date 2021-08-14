@@ -114,6 +114,6 @@ void main(){
 
     color = (light + vertexData.toambientcolor + specular + rim) * vertexData.tocolor *vec4(diffColor,1.0);
     color =texture;
-
+   
 
 }
