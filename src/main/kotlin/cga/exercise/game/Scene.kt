@@ -2,7 +2,7 @@ package cga.exercise.game
 
 import cga.exercise.components.camera.Aspectratio.Companion.custom
 import cga.exercise.components.camera.TronCamera
-import cga.exercise.components.mooncruiser.gameObjects.*
+import cga.exercise.components.mooncruiser.GameObjects.*
 import cga.exercise.components.mooncruiser.ObjectManager
 import cga.exercise.components.shader.ShaderProgram
 import cga.framework.GLError
@@ -26,7 +26,6 @@ class Scene(private val window: GameWindow) {
     private val staticShader = ShaderProgram("assets/shaders/tron_vert.glsl", "assets/shaders/tron_frag.glsl")
     private val toonShader = ShaderProgram("assets/shaders/toon_vert.glsl", "assets/shaders/toon_pixel.glsl")
     private val simpleShader = ShaderProgram("assets/shaders/simple_vert.glsl", "assets/shaders/simple_frag.glsl")
-
 
     //camera
     val camera : TronCamera
