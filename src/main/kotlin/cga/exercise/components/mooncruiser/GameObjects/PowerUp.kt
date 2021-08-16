@@ -15,7 +15,7 @@ import org.lwjgl.opengl.GL11
 
 class PowerUp : Renderable() {
 
-    var translateVector = Vector3f(10f,2f,1f)
+    var translateVector = Vector3f(0f,0f,2f)
     var rotateVector = Vector3f(1f,1f,1f)
 
     override fun update(dt: Float, window: GameWindow) {
@@ -26,6 +26,9 @@ class PowerUp : Renderable() {
     override fun init(camera: TronCamera) {
         PhysicManager.listOfAllCubes.add(this)
         this.trigger = true
+        //in Szene verschieben
+       translateLocal(translateVector)
+       scaleLocal(Vector3f(1f,1f,1f))
 
         super.init(camera)
         var vertexArray: MutableList<Vertex> = mutableListOf()
@@ -115,9 +118,6 @@ class PowerUp : Renderable() {
         val mesh = Mesh(vertexdata, indexdata, vertexAttributes, powerupMaterial )
         this.myMeshes.add(mesh)
 
-
-        scaleLocal(Vector3f(1f,1f,1f))
-        translateLocal(translateVector)
 
 
     }

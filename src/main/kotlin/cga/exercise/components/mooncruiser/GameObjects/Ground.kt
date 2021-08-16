@@ -9,15 +9,21 @@ import cga.exercise.components.texture.Texture2D
 import cga.framework.GameWindow
 import cga.framework.OBJLoader
 import org.joml.Vector2f
+import org.joml.Vector3f
 import org.lwjgl.opengl.GL11
 
 class Ground : Renderable(){
 
+    var translateVector = Vector3f(5f,5f,5f)
 
+    override fun update(dt: Float, window: GameWindow) {
 
-    override fun update(dt: Float, window: GameWindow) {}
+    }
 
     override fun init(camera: TronCamera) {
+
+        scaleLocal(translateVector)
+
         //load textures
         val groundDiff = Texture2D("assets/textures/ground_diff.png", true)
         groundDiff.setTexParams(GL11.GL_REPEAT, GL11.GL_REPEAT, GL11.GL_LINEAR_MIPMAP_LINEAR, GL11.GL_LINEAR)

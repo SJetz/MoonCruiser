@@ -2,16 +2,13 @@ package cga.exercise.game
 
 import cga.exercise.components.camera.Aspectratio.Companion.custom
 import cga.exercise.components.camera.TronCamera
-import cga.exercise.components.light.PointLight
-import cga.exercise.components.light.SpotLight
 import cga.exercise.components.mooncruiser.GameObjects.*
-import cga.exercise.components.mooncruiser.ObjectManager
+import cga.exercise.components.mooncruiser.GameObjects.ObjectManager
 import cga.exercise.components.shader.ShaderProgram
 import cga.framework.GLError
 import cga.framework.GameWindow
 import org.joml.Math
 import org.joml.Vector3f
-import org.joml.Vector4f
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.opengl.GL11.*
 
@@ -31,7 +28,10 @@ class Scene(private val window: GameWindow) {
     private val toonShader = ShaderProgram("assets/shaders/toon_vert.glsl", "assets/shaders/toon_frag.glsl")
 
     //camera
-    val camera : TronCamera
+    var cameraFront : TronCamera
+    var cameraBack : TronCamera
+
+    var cameraActive : TronCamera
 
     //mouse
     private var oldMouseX = 0.0
@@ -40,45 +40,61 @@ class Scene(private val window: GameWindow) {
 
     //scene setup
     init {
-        //setup camera
-        camera = TronCamera(
+
+        //setup cameraActive, cameraFront, cameraBack
+        cameraFront = TronCamera(
             custom(window.framebufferWidth, window.framebufferHeight),
             Math.toRadians(90.0f),
             0.1f,
             100.0f
         )
 
-        //move camera a little bit in z direction
-        camera.rotateLocal(Math.toRadians(-35.0f), 0.0f, 0.0f)
-        camera.translateLocal(Vector3f(0.0f, 0.0f, 4.0f))
+        cameraBack = TronCamera(
+            custom(window.framebufferWidth, window.framebufferHeight),
+            Math.toRadians(90.0f),
+            0.1f,
+            100.0f
+        )
+
+        cameraActive = cameraFront
+
+        //move cameras a little bit in z direction
+        cameraFront.rotateLocal(Math.toRadians(-35.0f), 0.0f, 0.0f)
+        cameraFront.translateLocal(Vector3f(0.0f, 0.0f, 4.0f))
+
+        cameraBack.rotateLocal(Math.toRadians(-35.0f), 0.0f, 0.0f)
+        cameraBack.translateLocal(Vector3f(0.0f, 5.0f, 0.0f))
+
+
 
         //init objectmanager
         objectManager = ObjectManager()
 
         //init gameobjects and assigne to objectmanager and set shaders
         var ground = Ground()
-        ground.init(camera)
+        ground.init(cameraActive)
         objectManager.addObject(ground)
         ground.setShader(toonShader)
 
         var car = Car()
-        car.init(camera)
+        car.init(cameraActive)
         objectManager.addObject(car)
         car.setShader(toonShader)
-        camera.parent = car
+        cameraActive.parent = car
+        cameraBack.parent = car
 
         var skybox = Skybox()
-        skybox.init(camera)
+        skybox.init(cameraActive)
         objectManager.addObject(skybox)
         skybox.setShader(toonShader)
 
         var debuff = Debuff()
-        debuff.init(camera)
+        debuff.init(cameraActive)
         objectManager.addObject(debuff)
         debuff.setShader(toonShader)
 
         var powerup = PowerUp()
-        powerup.init(camera)
+        powerup.init(cameraActive)
         objectManager.addObject(powerup)
         powerup.setShader(toonShader)
 
@@ -96,7 +112,7 @@ class Scene(private val window: GameWindow) {
         objectManager.render(dt,t)
 
         toonShader.use()
-        camera.bind(toonShader)
+        cameraActive.bind(toonShader)
 
     }
 
@@ -104,6 +120,11 @@ class Scene(private val window: GameWindow) {
 
     fun update(dt: Float, t: Float) { //camera update
         objectManager.update(dt,window)
+
+       if(window.getKeyState(GLFW_KEY_LEFT_SHIFT)) {
+           cameraActive = cameraBack
+       }else
+            cameraActive= cameraFront
     }
 
     fun onKey(key: Int, scancode: Int, action: Int, mode: Int) {}
@@ -116,7 +137,7 @@ class Scene(private val window: GameWindow) {
                 car.rotateLocal(0.0f, yawangle, 0.0f)
             }
             else{
-                camera.rotateAroundPoint(0.0f, yawangle, 0.0f, Vector3f(0.0f, 0.0f, 0.0f))
+                cameraActive.rotateAroundPoint(0.0f, yawangle, 0.0f, Vector3f(0.0f, 0.0f, 0.0f))
             }
         } else firstMouseMove = false
         oldMouseX = xpos

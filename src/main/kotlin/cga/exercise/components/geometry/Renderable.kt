@@ -10,7 +10,7 @@ import org.joml.Vector3f
 /**
  * Extends Transformable such that the object can render Mesh objects transformed by Transformable
  */
-open class Renderable() : Cube(pos = Vector3f()), IRenderable {
+open class Renderable() : Cube(), IRenderable {
     var myMeshes: MutableList<Mesh> = mutableListOf()
     var myShader: ShaderProgram = ShaderProgram("assets/shaders/tron_vert.glsl", "assets/shaders/tron_frag.glsl")
     lateinit var myCamera : TronCamera

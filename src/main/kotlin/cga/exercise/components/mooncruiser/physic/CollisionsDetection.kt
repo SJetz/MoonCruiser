@@ -7,12 +7,12 @@ class CollisionsDetection {
 
     companion object Foo {
 
-        var defaultVector1 : Vector3f = Vector3f()
-        var defaultVector2 : Vector3f = Vector3f()
-        var defaultVector3 : Vector3f = Vector3f()
-        var defaultVector4 : Vector3f = Vector3f()
-        var defaultVector5 : Vector3f = Vector3f()
-        var defaultVector6 : Vector3f = Vector3f()
+        var defaultVector1 : Vector3f = Vector3f(0f,0f,0f)
+        var defaultVector2 : Vector3f = Vector3f(0f,0f,0f)
+        var defaultVector3 : Vector3f = Vector3f(0f,0f,0f)
+        var defaultVector4 : Vector3f = Vector3f(0f,0f,0f)
+        var defaultVector5 : Vector3f = Vector3f(0f,0f,0f)
+        var defaultVector6 : Vector3f = Vector3f(0f,0f,0f)
 
         var defaultVector_1 : Vector3f = Vector3f(0f,0f,0f)
         var defaultVector_2 : Vector3f = Vector3f(0f,0f,0f)
@@ -70,11 +70,9 @@ class CollisionsDetection {
                 var maxB = Float.NEGATIVE_INFINITY
                 var i  = 0
                 while(i < 8){
-                    var defaultVectorfA : Vector3f = Vector3f(0f,0f,0f)
-                    var defaultVectorfB : Vector3f = Vector3f(0f,0f,0f)
 
-                    var fA = defaultVectorfA.add(vectors[j]).dot(cube1.myVertices[i])
-                    var fB = defaultVectorfB.add(vectors[j]).dot(cube2.myVertices[i])
+                    val fA = vectors[j].dot(cube1.myVertices[i])
+                    val fB = vectors[j].dot(cube2.myVertices[i])
 
                     if (fA <= minA)
                         minA = fA
@@ -83,7 +81,7 @@ class CollisionsDetection {
                         maxA = fA
 
                     if (fB <= minB)
-                        minB =fB
+                        minB = fB
 
                     if(fB >= maxB)
                         maxB = fB

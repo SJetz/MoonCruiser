@@ -107,9 +107,7 @@ class Skybox : Renderable() {
             val mesh = Mesh(vertexdata, indexdata, vertexAttributes, skyboxMaterial)
             this.myMeshes.add(mesh)
 
-        scaleLocal(Vector3f(50f,50f,50f))
-
-
+        scaleLocal(Vector3f(220f,220f,220f))
 
     }
 }

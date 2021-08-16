@@ -12,7 +12,7 @@ import org.lwjgl.opengl.GL11
 
 class Debuff : Renderable() {
 
-    var translateVector = Vector3f(5f,1f,1f)
+    var translateVector = Vector3f(20f,1f,1f)
     var rotateVector = Vector3f(1f,1f,1f)
 
     override fun update(dt: Float, window: GameWindow) {
@@ -23,6 +23,9 @@ class Debuff : Renderable() {
     override fun init(camera: TronCamera) {
         PhysicManager.listOfAllCubes.add(this)
         this.trigger = true
+        //in Szene verschieben
+        translateLocal(translateVector)
+        scaleLocal(Vector3f(2f,2f,2f))
 
         super.init(camera)
         var vertexArray: MutableList<Vertex> = mutableListOf()
@@ -112,9 +115,6 @@ class Debuff : Renderable() {
         val mesh = Mesh(vertexdata, indexdata, vertexAttributes, debuffMaterial)
         this.myMeshes.add(mesh)
 
-
-        scaleLocal(Vector3f(1f,1f,1f))
-        translateLocal(translateVector)
 
 }
 }

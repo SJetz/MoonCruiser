@@ -20,10 +20,12 @@ class Car() : Renderable() {
     lateinit var carPointLight2 : PointLight
     lateinit var carPointLight3 : PointLight
 
+    var translateVector = Vector3f(0f,0f,0f)
+
     override fun update(dt: Float, window: GameWindow) {
-        val movemul = 5.0f
+        val movemul = 15.0f
         val rotatemul = 2.0f
-        if (window.getKeyState(GLFW.GLFW_KEY_W)) {
+                if (window.getKeyState(GLFW.GLFW_KEY_W)) {
             translateLocal(Vector3f(0.0f, 0.0f, -dt * movemul))
         }
         if (window.getKeyState(GLFW.GLFW_KEY_S)) {
@@ -47,6 +49,8 @@ class Car() : Renderable() {
     override fun init(carCam: TronCamera) {
         PhysicManager.listOfAllCubes.add(this)
         this.collider = true
+
+        translateLocal(translateVector)
 
         myCamera = carCam
         super.myMeshes = ModelLoader.loadModel("assets/Light Cycle/Light Cycle/HQ_Movie cycle.obj", Math.toRadians(-90.0f), Math.toRadians(90.0f), 0.0f) ?: throw IllegalArgumentException("Could not load the model")
