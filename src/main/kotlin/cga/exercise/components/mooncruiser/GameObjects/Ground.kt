@@ -25,9 +25,9 @@ class Ground : Renderable(){
         scaleLocal(translateVector)
 
         //load textures
-        val groundDiff = Texture2D("assets/textures/ground_diff.png", true)
+        val groundDiff = Texture2D("assets/textures/space.jpg", true)
         groundDiff.setTexParams(GL11.GL_REPEAT, GL11.GL_REPEAT, GL11.GL_LINEAR_MIPMAP_LINEAR, GL11.GL_LINEAR)
-        val groundSpecular = Texture2D("assets/textures/ground_spec.png", true)
+        val groundSpecular = Texture2D("assets/textures/space.jpg", true)
         groundSpecular.setTexParams(GL11.GL_REPEAT, GL11.GL_REPEAT, GL11.GL_LINEAR_MIPMAP_LINEAR, GL11.GL_LINEAR)
         val groundEmit = Texture2D("assets/textures/ground_emit.png", true)
         groundEmit.setTexParams(GL11.GL_REPEAT, GL11.GL_REPEAT, GL11.GL_LINEAR_MIPMAP_LINEAR, GL11.GL_LINEAR)
@@ -48,5 +48,6 @@ class Ground : Renderable(){
             val mesh = Mesh(m.vertexData, m.indexData, vertexAttributes, groundMaterial)
             this.myMeshes.add(mesh)
         }
+
     }
 }

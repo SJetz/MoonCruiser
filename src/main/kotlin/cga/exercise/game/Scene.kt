@@ -63,7 +63,7 @@ class Scene(private val window: GameWindow) {
         cameraFront.translateLocal(Vector3f(0.0f, 0.0f, 4.0f))
 
         cameraBack.rotateLocal(Math.toRadians(-35.0f), 0.0f, 0.0f)
-        cameraBack.translateLocal(Vector3f(0.0f, 5.0f, 0.0f))
+        cameraBack.translateLocal(Vector3f(0.0f, 0.0f, 15.0f))
 
 
 
@@ -117,8 +117,8 @@ class Scene(private val window: GameWindow) {
     }
 
 
-
-    fun update(dt: Float, t: Float) { //camera update
+    //camera update
+    fun update(dt: Float, t: Float) {
         objectManager.update(dt,window)
 
        if(window.getKeyState(GLFW_KEY_LEFT_SHIFT)) {

@@ -23,9 +23,10 @@ class Car() : Renderable() {
     var translateVector = Vector3f(0f,0f,0f)
 
     override fun update(dt: Float, window: GameWindow) {
-        val movemul = 15.0f
+        val movemul = 25.0f
         val rotatemul = 2.0f
-                if (window.getKeyState(GLFW.GLFW_KEY_W)) {
+
+        if (window.getKeyState(GLFW.GLFW_KEY_W)) {
             translateLocal(Vector3f(0.0f, 0.0f, -dt * movemul))
         }
         if (window.getKeyState(GLFW.GLFW_KEY_S)) {
@@ -53,7 +54,8 @@ class Car() : Renderable() {
         translateLocal(translateVector)
 
         myCamera = carCam
-        super.myMeshes = ModelLoader.loadModel("assets/car/car.obj", Math.toRadians(0.0f), Math.toRadians(180.0f), 0.0f) ?: throw IllegalArgumentException("Could not load the model")
+        //super.myMeshes = ModelLoader.loadModel("assets/Light Cycle/Light Cycle/HQ_movie cycle.obj", Math.toRadians(-90.0f), Math.toRadians(90.0f), 0.0f) ?: throw IllegalArgumentException("Could not load the model")
+        super.myMeshes = ModelLoader.loadModel("assets/car/car/sportcar.017.fbx", Math.toRadians(-90.0f), Math.toRadians(180.0f), 0.0f) ?: throw IllegalArgumentException("Could not load the model")
         this.scaleLocal(Vector3f(0.8f, 0.8f, 0.8f))
 
         //bike point light

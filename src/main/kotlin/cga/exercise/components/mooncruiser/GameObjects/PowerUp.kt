@@ -15,12 +15,12 @@ import org.lwjgl.opengl.GL11
 
 class PowerUp : Renderable() {
 
-    var translateVector = Vector3f(0f,0f,2f)
+    var translateVector = Vector3f(0f,1f,2f)
     var rotateVector = Vector3f(1f,1f,1f)
 
     override fun update(dt: Float, window: GameWindow) {
             rotateLocal(dt, dt, dt)
-            rotateAroundPoint(0f, 0f, 0f, rotateVector)
+            rotateAroundPoint(0f, dt, 0f, rotateVector)
     }
 
     override fun init(camera: TronCamera) {
