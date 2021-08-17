@@ -132,7 +132,7 @@ class Scene(private val window: GameWindow) {
     fun onMouseMove(xpos: Double, ypos: Double) {
         if (!firstMouseMove) {
             val yawangle = (xpos - oldMouseX).toFloat() * 0.002f
-            val pitchangle = (ypos - oldMouseY).toFloat() * 0.0005f
+            val pitchangle = (ypos - oldMouseY).toFloat() * 0.002f
             if (!window.getKeyState(GLFW_KEY_LEFT_ALT)) {
                 car.rotateLocal(0.0f, yawangle, 0.0f)
             }

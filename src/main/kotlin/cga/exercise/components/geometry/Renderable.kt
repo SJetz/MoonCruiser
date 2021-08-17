@@ -4,8 +4,6 @@ import cga.exercise.components.camera.TronCamera
 import cga.exercise.components.mooncruiser.physic.Cube
 import cga.exercise.components.shader.ShaderProgram
 import cga.framework.GameWindow
-import org.joml.Vector3f
-
 
 /**
  * Extends Transformable such that the object can render Mesh objects transformed by Transformable

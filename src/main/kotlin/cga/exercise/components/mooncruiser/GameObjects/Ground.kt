@@ -44,7 +44,7 @@ class Ground : Renderable(){
         val vertexAttributes = arrayOf(atr1, atr2, atr3)
 
         //Create renderable
-        for (m in gres.objects[0].meshes) {
+       for (m in gres.objects[0].meshes) {
             val mesh = Mesh(m.vertexData, m.indexData, vertexAttributes, groundMaterial)
             this.myMeshes.add(mesh)
         }

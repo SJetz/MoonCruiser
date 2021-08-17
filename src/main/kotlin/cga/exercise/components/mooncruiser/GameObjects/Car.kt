@@ -53,7 +53,7 @@ class Car() : Renderable() {
         translateLocal(translateVector)
 
         myCamera = carCam
-        super.myMeshes = ModelLoader.loadModel("assets/Light Cycle/Light Cycle/HQ_Movie cycle.obj", Math.toRadians(-90.0f), Math.toRadians(90.0f), 0.0f) ?: throw IllegalArgumentException("Could not load the model")
+        super.myMeshes = ModelLoader.loadModel("assets/car/car.obj", Math.toRadians(0.0f), Math.toRadians(180.0f), 0.0f) ?: throw IllegalArgumentException("Could not load the model")
         this.scaleLocal(Vector3f(0.8f, 0.8f, 0.8f))
 
         //bike point light
