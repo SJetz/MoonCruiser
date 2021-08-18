@@ -61,7 +61,7 @@ class Car() : Renderable() {
         this.scaleLocal(Vector3f(0.8f, 0.8f, 0.8f))
 
         //bike point light
-        carPointLight = PointLight(Vector3f(0.0f, 2.0f, 0.0f), Vector3f(0.0f, 0.5f, 0.0f))
+        carPointLight = PointLight(Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f))
         carPointLight.parent = this
 
         //car scheinwerfer
@@ -76,8 +76,8 @@ class Car() : Renderable() {
 
 
         groundColor = Vector3f(1.0f, 1.0f, 1.0f)
-        carPointLight2 = PointLight(Vector3f(0.0f, 2.0f, 2.0f), Vector3f(-10.0f, 2.0f, -10.0f))
-        carPointLight3 = PointLight(Vector3f(2.0f, 0.0f, 0.0f), Vector3f(10.0f, 2.0f, 10.0f))
+        carPointLight2 = PointLight(Vector3f(0.0f, 0.0f, 0.0f), Vector3f(-10.0f, 2.0f, -10.0f))
+        carPointLight3 = PointLight(Vector3f(0.0f, 0.0f, 0.0f), Vector3f(10.0f, 2.0f, 10.0f))
     }
 
     override fun render(dt: Float, t: Float) {
