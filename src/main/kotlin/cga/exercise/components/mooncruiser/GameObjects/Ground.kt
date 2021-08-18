@@ -31,6 +31,7 @@ class Ground : Renderable(){
         groundSpecular.setTexParams(GL11.GL_REPEAT, GL11.GL_REPEAT, GL11.GL_LINEAR_MIPMAP_LINEAR, GL11.GL_LINEAR)
         val groundEmit = Texture2D("assets/textures/ground_emit.png", true)
         groundEmit.setTexParams(GL11.GL_REPEAT, GL11.GL_REPEAT, GL11.GL_LINEAR_MIPMAP_LINEAR, GL11.GL_LINEAR)
+        //reihenfolge relevant (diff,emit,spec)
         var groundMaterial = Material(groundDiff, groundEmit, groundSpecular, 60f, Vector2f(64.0f, 64.0f))
 
         //load an object and create a mesh
@@ -38,10 +39,14 @@ class Ground : Renderable(){
 
         //Create the mesh
         val stride = 8 * 4
+        //boden haben
         val atr1 = VertexAttribute(3, GL11.GL_FLOAT, stride, 0) //position attribute
+        //texture
         val atr2 = VertexAttribute(2, GL11.GL_FLOAT, stride, 3 * 4) //texture coordinate attribut
+        //shiny
         val atr3 = VertexAttribute(3, GL11.GL_FLOAT, stride, 5 * 4) //normal attribute
-        val vertexAttributes = arrayOf(atr1, atr2, atr3)
+
+        val vertexAttributes = arrayOf(atr1,atr2,atr3)
 
         //Create renderable
        for (m in gres.objects[0].meshes) {

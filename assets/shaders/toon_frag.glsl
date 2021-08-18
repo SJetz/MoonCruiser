@@ -128,7 +128,7 @@ void main(){
     pshade2 * intPointLight2 +
     pshade3 * intPointLight3 +
     sshade * intSpotLight +
-    sshade2 * intPointLight2, 1.0f);
+    sshade2 * intSpotLight2, 1.0f);
 
 
     // Blinn-Phong shading:
@@ -145,7 +145,7 @@ void main(){
     pshade2 * intPointLight2 +
     pshade3 * intPointLight3 +
     sshade * intSpotLight +
-    sshade2 * intPointLight2, 1.0f);
+    sshade2 * intSpotLight2, 1.0f);
 
     //lighting below is calcutaled using blinn phong
 

@@ -65,14 +65,14 @@ class Car() : Renderable() {
         carPointLight.parent = this
 
         //car scheinwerfer
-        carSpotLight = SpotLight(Vector3f(5.0f, 5.0f, 5.0f), Vector3f(5.0f, 1.0f, -2.0f), Math.toRadians(20.0f), Math.toRadians(30.0f))
+        carSpotLight = SpotLight(Vector3f(5.0f, 5.0f, 5.0f), Vector3f(-2.0f, 1.0f, -2.0f), Math.toRadians(20.0f), Math.toRadians(30.0f))
         carSpotLight.rotateLocal(Math.toRadians(-10.0f), Math.PI.toFloat(), 0.0f)
         carSpotLight.parent = this
+
         //car scheinwerfer 2
-        carSpotLight2 = SpotLight(Vector3f(5.0f, 5.0f, 5.0f), Vector3f(0.0f, 1.0f, -2.0f), Math.toRadians(20.0f), Math.toRadians(30.0f))
+        carSpotLight2 = SpotLight(Vector3f(5.0f, 5.0f, 5.0f), Vector3f(2.0f, 1.0f, -2.0f), Math.toRadians(20.0f), Math.toRadians(30.0f))
         carSpotLight2.rotateLocal(Math.toRadians(-10.0f), Math.PI.toFloat(), 0.0f)
         carSpotLight2.parent = this
-
 
 
         groundColor = Vector3f(1.0f, 1.0f, 1.0f)
@@ -83,14 +83,18 @@ class Car() : Renderable() {
     override fun render(dt: Float, t: Float) {
         super.render(dt, t)
         val changingColor = Vector3f(Math.abs(Math.sin(t)), 0f, Math.abs(Math.cos(t)))
+
         carPointLight.lightColor = changingColor
+
         myShader.setUniform("shadingColor", changingColor)
+
         carPointLight.bind(myShader, "bikePointLight")
         carPointLight2.bind(myShader, "bikePointLight2")
         carPointLight3.bind(myShader, "bikePointLight3")
 
         carSpotLight.bind(myShader, "bikeSpotLight", myCamera.calculateViewMatrix())
         carSpotLight2.bind(myShader, "bikeSpotLight2", myCamera.calculateViewMatrix())
+
         myShader.setUniform("shadingColor", groundColor)
     }
 
