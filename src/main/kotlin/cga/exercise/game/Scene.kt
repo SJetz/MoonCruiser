@@ -30,7 +30,6 @@ class Scene(private val window: GameWindow) {
     //camera
     var cameraFront : TronCamera
     var cameraBack : TronCamera
-
     var cameraActive : TronCamera
 
     //mouse
@@ -62,8 +61,8 @@ class Scene(private val window: GameWindow) {
         cameraFront.rotateLocal(Math.toRadians(-35.0f), 0.0f, 0.0f)
         cameraFront.translateLocal(Vector3f(0.0f, 0.0f, 4.0f))
 
-        cameraBack.rotateLocal(Math.toRadians(-35.0f), 0.0f, 0.0f)
-        cameraBack.translateLocal(Vector3f(0.0f, 0.0f, 15.0f))
+        cameraBack.rotateLocal(Math.toRadians(-145.0f), 0.0f, 110.0f)
+        cameraBack.translateLocal(Vector3f(0.0f, 0.0f, 4.0f))
 
 
 

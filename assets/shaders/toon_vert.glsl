@@ -13,10 +13,11 @@ uniform vec2 tcMultiplier;
 
 // lights
 uniform vec3 bikePointLightPosition;
-uniform vec3 bikeSpotLightPosition;
-
 uniform vec3 bikePointLight2Position;
 uniform vec3 bikePointLight3Position;
+
+uniform vec3 bikeSpotLightPosition;
+uniform vec3 bikeSpotLight2Position;
 
 uniform vec3  direction = vec3(0.2f,-0.5f,-1.0f);
 uniform float intensity = 1;
@@ -50,6 +51,7 @@ out struct VertexData
     vec3 toBikePointLight2;
     vec3 toBikePointLight3;
     vec3 toBikeSpotLight;
+    vec3 toBikeSpotLight2;
 } vertexData;
 
 void main(){
@@ -61,6 +63,7 @@ void main(){
     vertexData.toBikePointLight2 = (view_matrix * vec4(bikePointLight2Position, 1.0)).xyz - viewpos.xyz;
     vertexData.toBikePointLight3 = (view_matrix * vec4(bikePointLight3Position, 1.0)).xyz - viewpos.xyz;
     vertexData.toBikeSpotLight = (view_matrix * vec4(bikeSpotLightPosition, 1.0)).xyz - viewpos.xyz;
+    vertexData.toBikeSpotLight2 = (view_matrix * vec4(bikeSpotLight2Position, 1.0)).xyz - viewpos.xyz;
 
     gl_Position = proj_matrix * viewpos;
 

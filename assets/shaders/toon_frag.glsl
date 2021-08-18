@@ -22,6 +22,7 @@ in struct VertexData
     vec3 toBikePointLight2;
     vec3 toBikePointLight3;
     vec3 toBikeSpotLight;
+    vec3 toBikeSpotLight2;
 } vertexData;
 
 uniform sampler2D materialDiff;
@@ -41,9 +42,16 @@ uniform vec3 bikePointLight2AttParams;
 uniform vec3 bikePointLight3AttParams;
 
 uniform vec2 bikeSpotLightCone;
+uniform vec2 bikeSpotLight2Cone;
+
 uniform vec3 bikeSpotLightColor;
+uniform vec3 bikeSpotLight2Color;
+
 uniform vec3 bikeSpotLightDirection;
+uniform vec3 bikeSpotLight2Direction;
+
 uniform vec3 bikeSpotLightAttParams;
+uniform vec3 bikeSpotLight2AttParams;
 
 //fragment shader output
 out vec4 color;
@@ -92,6 +100,7 @@ void main(){
     vec3 Lbpl3 = normalize(vertexData.toBikePointLight3);
 
     vec3 Lbsl = normalize(vertexData.toBikeSpotLight);
+    vec3 Lbsl2 = normalize(vertexData.toBikeSpotLight2);
     vec3 V = normalize(vertexData.toCamera);
 
     vec3 diffColor = texture(materialDiff, vertexData.textureCoordinate).rgb;
@@ -105,19 +114,22 @@ void main(){
     vec3 pshade3 =  shade(N, Lbpl3, V, diffColor, specColor, materialShininess);
 
     vec3 sshade =  shade(N, Lbsl, V, diffColor, specColor, materialShininess);
+    vec3 sshade2 =  shade(N, Lbsl2, V, diffColor, specColor, materialShininess);
 
     vec3 intPointLight = getPointLightIntensity(bikePointLightColor, vertexData.toBikePointLight, bikePointLightAttParams);
     vec3 intPointLight2 = getPointLightIntensity(bikePointLight2Color, vertexData.toBikePointLight2, bikePointLight2AttParams);
     vec3 intPointLight3 = getPointLightIntensity(bikePointLight3Color, vertexData.toBikePointLight3, bikePointLight3AttParams);
 
     vec3 intSpotLight = getSpotLightIntensity(bikeSpotLightColor, vertexData.toBikeSpotLight, bikeSpotLightDirection, bikeSpotLightCone);
-
+    vec3 intSpotLight2 = getSpotLightIntensity(bikeSpotLight2Color, vertexData.toBikeSpotLight2, bikeSpotLight2Direction, bikeSpotLight2Cone);
 
     color = vec4(emit_term +
     pshade * intPointLight +
     pshade2 * intPointLight2 +
     pshade3 * intPointLight3 +
-    sshade * intSpotLight, 1.0f);
+    sshade * intSpotLight +
+    sshade2 * intPointLight2, 1.0f);
+
 
     // Blinn-Phong shading:
 
@@ -126,12 +138,14 @@ void main(){
     pshade3 = shadeBlinn(N, Lbpl3, V, diffColor, specColor, materialShininess*2);
 
     sshade =  shadeBlinn(N, Lbsl, V, diffColor, specColor, materialShininess);
+    sshade2 =  shadeBlinn(N, Lbsl2, V, diffColor, specColor, materialShininess);
 
     vec4 precolor = vec4(emit_term +
     pshade * intPointLight +
     pshade2 * intPointLight2 +
     pshade3 * intPointLight3 +
-    sshade * intSpotLight, 1.0f);
+    sshade * intSpotLight +
+    sshade2 * intPointLight2, 1.0f);
 
     //lighting below is calcutaled using blinn phong
 

@@ -15,10 +15,12 @@ import org.lwjgl.glfw.GLFW
 class Car() : Renderable() {
 
     lateinit var carPointLight : PointLight
-    lateinit var carSpotLight :SpotLight
     lateinit var groundColor : Vector3f
     lateinit var carPointLight2 : PointLight
     lateinit var carPointLight3 : PointLight
+
+    lateinit var carSpotLight :SpotLight
+    lateinit var carSpotLight2 :SpotLight
 
     var translateVector = Vector3f(0f,0f,0f)
 
@@ -62,10 +64,17 @@ class Car() : Renderable() {
         carPointLight = PointLight(Vector3f(0.0f, 2.0f, 0.0f), Vector3f(0.0f, 0.5f, 0.0f))
         carPointLight.parent = this
 
-        //bike spot light
-        carSpotLight = SpotLight(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 1.0f, -2.0f), Math.toRadians(20.0f), Math.toRadians(30.0f))
+        //car scheinwerfer
+        carSpotLight = SpotLight(Vector3f(5.0f, 5.0f, 5.0f), Vector3f(5.0f, 1.0f, -2.0f), Math.toRadians(20.0f), Math.toRadians(30.0f))
         carSpotLight.rotateLocal(Math.toRadians(-10.0f), Math.PI.toFloat(), 0.0f)
         carSpotLight.parent = this
+        //car scheinwerfer 2
+        carSpotLight2 = SpotLight(Vector3f(5.0f, 5.0f, 5.0f), Vector3f(0.0f, 1.0f, -2.0f), Math.toRadians(20.0f), Math.toRadians(30.0f))
+        carSpotLight2.rotateLocal(Math.toRadians(-10.0f), Math.PI.toFloat(), 0.0f)
+        carSpotLight2.parent = this
+
+
+
         groundColor = Vector3f(1.0f, 1.0f, 1.0f)
         carPointLight2 = PointLight(Vector3f(0.0f, 2.0f, 2.0f), Vector3f(-10.0f, 2.0f, -10.0f))
         carPointLight3 = PointLight(Vector3f(2.0f, 0.0f, 0.0f), Vector3f(10.0f, 2.0f, 10.0f))
@@ -79,7 +88,9 @@ class Car() : Renderable() {
         carPointLight.bind(myShader, "bikePointLight")
         carPointLight2.bind(myShader, "bikePointLight2")
         carPointLight3.bind(myShader, "bikePointLight3")
+
         carSpotLight.bind(myShader, "bikeSpotLight", myCamera.calculateViewMatrix())
+        carSpotLight2.bind(myShader, "bikeSpotLight2", myCamera.calculateViewMatrix())
         myShader.setUniform("shadingColor", groundColor)
     }
 
