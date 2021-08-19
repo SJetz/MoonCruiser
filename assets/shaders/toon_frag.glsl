@@ -149,7 +149,7 @@ void main(){
 
     //lighting below is calcutaled using blinn phong
 
-    //the dot product is need to get a relastic style of illumination, depnig on the litght direction
+    //the dot product is need to get a relastic style of illumination, depnig on the lights direction
     float NdotL = dot(vertexData.todirection*-1, N);
 
     //the lower and upper bounce a close together in order to mainten a relatively sharp, toon edge

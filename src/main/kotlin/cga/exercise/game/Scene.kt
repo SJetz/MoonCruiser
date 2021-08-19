@@ -2,6 +2,7 @@ package cga.exercise.game
 
 import cga.exercise.components.camera.Aspectratio.Companion.custom
 import cga.exercise.components.camera.TronCamera
+import cga.exercise.components.light.SpotLight
 import cga.exercise.components.mooncruiser.GameObjects.*
 import cga.exercise.components.mooncruiser.GameObjects.ObjectManager
 import cga.exercise.components.shader.ShaderProgram
@@ -59,10 +60,10 @@ class Scene(private val window: GameWindow) {
 
         //move cameras a little bit in z direction
         cameraFront.rotateLocal(Math.toRadians(-35.0f), 0.0f, 0.0f)
-        cameraFront.translateLocal(Vector3f(0.0f, 0.0f, 4.0f))
+        cameraFront.translateLocal(Vector3f(0.0f, 0.0f, 8.0f))
 
-        cameraBack.rotateLocal(Math.toRadians(-145.0f), 0.0f, 110.0f)
-        cameraBack.translateLocal(Vector3f(0.0f, 0.0f, 4.0f))
+        cameraBack.rotateLocal(Math.toRadians(-145.0f), 0.0f, Math.toRadians(180.0f))
+        cameraBack.translateLocal(Vector3f(0.0f, 0.0f, 8.0f))
 
 
 
@@ -81,6 +82,7 @@ class Scene(private val window: GameWindow) {
         car.setShader(toonShader)
         cameraActive.parent = car
         cameraBack.parent = car
+
 
         var skybox = Skybox()
         skybox.init(cameraActive)
@@ -120,10 +122,11 @@ class Scene(private val window: GameWindow) {
     fun update(dt: Float, t: Float) {
         objectManager.update(dt,window)
 
-       if(window.getKeyState(GLFW_KEY_LEFT_SHIFT)) {
-           cameraActive = cameraBack
-       }else
-            cameraActive= cameraFront
+        if(window.getKeyState(GLFW_KEY_LEFT_SHIFT)) {
+            cameraActive = cameraBack
+
+        }else
+            cameraActive = cameraFront
     }
 
     fun onKey(key: Int, scancode: Int, action: Int, mode: Int) {}

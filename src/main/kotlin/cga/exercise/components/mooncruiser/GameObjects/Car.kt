@@ -19,13 +19,13 @@ class Car() : Renderable() {
     lateinit var carPointLight2 : PointLight
     lateinit var carPointLight3 : PointLight
 
-    lateinit var carSpotLight :SpotLight
-    lateinit var carSpotLight2 :SpotLight
+    lateinit var carSpotLight : SpotLight
+    lateinit var carSpotLight2 : SpotLight
 
     var translateVector = Vector3f(0f,0f,0f)
 
     override fun update(dt: Float, window: GameWindow) {
-        val movemul = 25.0f
+        val movemul = 10.0f
         val rotatemul = 2.0f
 
         if (window.getKeyState(GLFW.GLFW_KEY_W)) {
@@ -46,7 +46,6 @@ class Car() : Renderable() {
         if (window.getKeyState(GLFW.GLFW_KEY_D) and window.getKeyState(GLFW.GLFW_KEY_S)) {
             rotateLocal( 0.0f, -dt * rotatemul,0.0f)
         }
-
     }
 
     override fun init(carCam: TronCamera) {
@@ -65,12 +64,12 @@ class Car() : Renderable() {
         carPointLight.parent = this
 
         //car scheinwerfer
-        carSpotLight = SpotLight(Vector3f(5.0f, 5.0f, 5.0f), Vector3f(-2.0f, 1.0f, -2.0f), Math.toRadians(20.0f), Math.toRadians(30.0f))
+        carSpotLight = SpotLight(Vector3f(20.0f, 20.0f, 20.0f), Vector3f(-0.5f, 0.25f, -1.75f), Math.toRadians(10.0f), Math.toRadians(30.0f))
         carSpotLight.rotateLocal(Math.toRadians(-10.0f), Math.PI.toFloat(), 0.0f)
         carSpotLight.parent = this
 
         //car scheinwerfer 2
-        carSpotLight2 = SpotLight(Vector3f(5.0f, 5.0f, 5.0f), Vector3f(2.0f, 1.0f, -2.0f), Math.toRadians(20.0f), Math.toRadians(30.0f))
+        carSpotLight2 = SpotLight(Vector3f(20.0f, 20.0f, 20.0f), Vector3f(0.5f, 0.25f, -1.75f), Math.toRadians(10.0f), Math.toRadians(30.0f))
         carSpotLight2.rotateLocal(Math.toRadians(-10.0f), Math.PI.toFloat(), 0.0f)
         carSpotLight2.parent = this
 

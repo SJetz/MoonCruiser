@@ -25,9 +25,9 @@ class Ground : Renderable(){
         scaleLocal(translateVector)
 
         //load textures
-        val groundDiff = Texture2D("assets/textures/space.jpg", true)
+        val groundDiff = Texture2D("assets/textures/space.jpeg", true)
         groundDiff.setTexParams(GL11.GL_REPEAT, GL11.GL_REPEAT, GL11.GL_LINEAR_MIPMAP_LINEAR, GL11.GL_LINEAR)
-        val groundSpecular = Texture2D("assets/textures/space.jpg", true)
+        val groundSpecular = Texture2D("assets/textures/space.jpeg", true)
         groundSpecular.setTexParams(GL11.GL_REPEAT, GL11.GL_REPEAT, GL11.GL_LINEAR_MIPMAP_LINEAR, GL11.GL_LINEAR)
         val groundEmit = Texture2D("assets/textures/ground_emit.png", true)
         groundEmit.setTexParams(GL11.GL_REPEAT, GL11.GL_REPEAT, GL11.GL_LINEAR_MIPMAP_LINEAR, GL11.GL_LINEAR)
