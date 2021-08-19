@@ -12,20 +12,21 @@ import org.lwjgl.opengl.GL11
 
 class Debuff : Renderable() {
 
-    var translateVector = Vector3f(20f,1f,1f)
+    var translateVector = Vector3f(0f,0.5f,20f)
     var rotateVector = Vector3f(1f,1f,1f)
 
     override fun update(dt: Float, window: GameWindow) {
-        rotateLocal(dt, dt, dt)
-        rotateAroundPoint(0f, 0f, 0f, rotateVector)
+        //rotateLocal(dt, dt, dt)
+        //rotateAroundPoint(0f, 0f, 0f, rotateVector)
     }
 
     override fun init(camera: TronCamera) {
         PhysicManager.listOfAllCubes.add(this)
         this.trigger = true
+
         //in Szene verschieben
         translateLocal(translateVector)
-        scaleLocal(Vector3f(2f,2f,2f))
+        scaleLocal(Vector3f(1f,1f,1f))
 
         super.init(camera)
         var vertexArray: MutableList<Vertex> = mutableListOf()

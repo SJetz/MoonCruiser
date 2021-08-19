@@ -4,6 +4,7 @@ import cga.exercise.components.camera.TronCamera
 import cga.exercise.components.geometry.Renderable
 import cga.exercise.components.light.PointLight
 import cga.exercise.components.light.SpotLight
+import cga.exercise.components.mooncruiser.physic.Cube
 import cga.exercise.components.mooncruiser.physic.PhysicManager
 import cga.framework.GameWindow
 import cga.framework.ModelLoader
@@ -12,7 +13,7 @@ import org.joml.Vector3f
 import org.lwjgl.glfw.GLFW
 
 
-class Car() : Renderable() {
+class Car() : Renderable(){
 
     lateinit var carPointLight : PointLight
     lateinit var groundColor : Vector3f
@@ -25,7 +26,7 @@ class Car() : Renderable() {
     var translateVector = Vector3f(0f,0f,0f)
 
     override fun update(dt: Float, window: GameWindow) {
-        val movemul = 10.0f
+        val movemul = 10f
         val rotatemul = 2.0f
 
         if (window.getKeyState(GLFW.GLFW_KEY_W)) {
