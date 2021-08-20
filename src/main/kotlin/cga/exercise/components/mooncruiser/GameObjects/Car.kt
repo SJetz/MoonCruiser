@@ -50,10 +50,8 @@ class Car(movespeed : Float) : Renderable(){
     }
 
     override fun init(carCam: TronCamera) {
-        PhysicManager.listOfAllCubes.add(this)
-        this.collider = true
-
-        //translateLocal(translateVector)
+       // PhysicManager.listOfAllCubes.add(this)
+       // this.collider = true
 
         myCamera = carCam
         //super.myMeshes = ModelLoader.loadModel("assets/Light Cycle/Light Cycle/HQ_movie cycle.obj", Math.toRadians(-90.0f), Math.toRadians(90.0f), 0.0f) ?: throw IllegalArgumentException("Could not load the model")

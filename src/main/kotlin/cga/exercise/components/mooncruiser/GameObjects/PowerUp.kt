@@ -16,16 +16,14 @@ import org.lwjgl.opengl.GL11
 class PowerUp(koordinatenVektor: Vector3f) : Renderable() {
 
     var translateVector = Vector3f(koordinatenVektor)
-    var rotateVector = Vector3f(1f,1f,1f)
 
     override fun update(dt: Float, window: GameWindow) {
-            //rotateLocal(dt, dt, dt)
-            //rotateAroundPoint(0f, 0f, 0f, rotateVector)
+            rotateLocal(dt, dt, dt)
     }
 
     override fun init(camera: TronCamera) {
-        PhysicManager.listOfAllCubes.add(this)
-        this.trigger = true
+       // PhysicManager.listOfAllCubes.add(this)
+       // this.trigger = true
 
         //in Szene verschieben
        translateLocal(translateVector)

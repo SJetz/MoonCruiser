@@ -9,8 +9,8 @@ import org.lwjgl.opengl.GLCapabilities
 import org.lwjgl.system.Callback
 import org.lwjgl.system.MemoryUtil
 
-/**
- * Created by Fabian on 16.09.2017.
+/**d by Fabian on 16.09.2017.
+ * Create
  */
 /**
  * Base class for GameWindows using OpenGL for rendering

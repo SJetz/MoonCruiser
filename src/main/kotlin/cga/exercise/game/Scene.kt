@@ -2,10 +2,11 @@ package cga.exercise.game
 
 import cga.exercise.components.camera.Aspectratio.Companion.custom
 import cga.exercise.components.camera.TronCamera
-import cga.exercise.components.light.SpotLight
+import cga.exercise.components.geometry.Renderable
+
 import cga.exercise.components.mooncruiser.GameObjects.*
 import cga.exercise.components.mooncruiser.GameObjects.ObjectManager
-import cga.exercise.components.mooncruiser.physic.PhysicManager
+
 import cga.exercise.components.shader.ShaderProgram
 import cga.framework.GLError
 import cga.framework.GameWindow
@@ -20,9 +21,7 @@ import org.lwjgl.opengl.GL11.*
 class Scene(private val window: GameWindow) {
 
     var car = Car(0f)
-    //spawn
     var powerup = PowerUp(Vector3f(0f,0f,0f))
-    var powerup1 = PowerUp(Vector3f(0f,0f,0f))
     var debuff = Debuff(Vector3f(0f,0f,0f), Vector3f(0f,0f,0f))
 
     //obecjtmanger
@@ -33,6 +32,8 @@ class Scene(private val window: GameWindow) {
     private val simpleShader = ShaderProgram("assets/shaders/simple_vert.glsl", "assets/shaders/simple_frag.glsl")
     private val toonShader = ShaderProgram("assets/shaders/toon_vert.glsl", "assets/shaders/toon_frag.glsl")
 
+    var shader: ShaderProgram = toonShader
+
     //camera
     var cameraFront : TronCamera
     var cameraBack : TronCamera
@@ -42,6 +43,14 @@ class Scene(private val window: GameWindow) {
     private var oldMouseX = 0.0
     private var oldMouseY = 0.0
     private var firstMouseMove = true
+
+
+    fun checkForCollision(renderable1: Renderable, renderable2: Renderable) : Float{
+        val xDistance=renderable1.getPosition().x-renderable2.getPosition().x
+        val yDistance=renderable1.getPosition().y-renderable2.getPosition().y
+        val zDistance=renderable1.getPosition().z-renderable2.getPosition().z
+        return Math.sqrt((xDistance*xDistance).toDouble()+ (yDistance*yDistance).toDouble()+(zDistance*zDistance).toDouble()).toFloat()
+    }
 
     //scene setup
     init {
@@ -79,12 +88,12 @@ class Scene(private val window: GameWindow) {
         var ground = Ground()
         ground.init(cameraActive)
         objectManager.addObject(ground)
-        ground.setShader(toonShader)
+        ground.setShader(shader)
 
         car = Car(10f)
         car.init(cameraActive)
         objectManager.addObject(car)
-        car.setShader(toonShader)
+        car.setShader(shader)
         cameraActive.parent = car
         cameraBack.parent = car
 
@@ -92,23 +101,20 @@ class Scene(private val window: GameWindow) {
         var skybox = Skybox()
         skybox.init(cameraActive)
         objectManager.addObject(skybox)
-        skybox.setShader(toonShader)
+        skybox.setShader(shader)
 
-        //spawn
-        debuff = Debuff(Vector3f(4f,0.5f,-40f), Vector3f(0f,0.5f,-40f))
+
+        debuff = Debuff(Vector3f(0f,1f,-50f), Vector3f(0f,0f,0f))
         debuff.init(cameraActive)
-        debuff.setShader(toonShader)
+        objectManager.addObject(debuff)
+        debuff.setShader(shader)
 
-        //spawn
-        powerup = PowerUp(Vector3f(0f,0.5f,-20f))
+
+        powerup = PowerUp(Vector3f(0f,1f,-20f))
         powerup.init(cameraActive)
         objectManager.addObject(powerup)
-        powerup.setShader(toonShader)
+        powerup.setShader(shader)
 
-        //spawn
-        powerup1 = PowerUp(Vector3f(0f,0.5f,-40f))
-        powerup1.init(cameraActive)
-        powerup1.setShader(toonShader)
 
         //initial opengl state
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f); GLError.checkThrow()
@@ -123,11 +129,10 @@ class Scene(private val window: GameWindow) {
 
         objectManager.render(dt,t)
 
-        toonShader.use()
-        cameraActive.bind(toonShader)
+        shader.use()
+        cameraActive.bind(shader)
 
     }
-
 
     //camera update
     fun update(dt: Float, t: Float) {
@@ -138,20 +143,14 @@ class Scene(private val window: GameWindow) {
         }else
             cameraActive = cameraFront
 
-        //spawn
-        if (PhysicManager.checkCollision(powerup) == true){
-            objectManager.removeObject(powerup)
-                car.movemul = 15f
-                objectManager.addObject(powerup1)
-                objectManager.addObject(debuff)
-            }
-        if (PhysicManager.checkCollision(powerup1) == true) {
-                objectManager.removeObject(powerup1)
-                objectManager.removeObject(debuff)
-        }
+        if(checkForCollision(car,powerup) <= 2f ){
+           objectManager.removeObject(powerup)
+           car.movemul = 20f
+        }else if (checkForCollision(car,debuff) <= 2f){
+            objectManager.removeObject(debuff)
+            car.movemul = 5f
     }
-
-
+    }
 
     fun onKey(key: Int, scancode: Int, action: Int, mode: Int) {}
 

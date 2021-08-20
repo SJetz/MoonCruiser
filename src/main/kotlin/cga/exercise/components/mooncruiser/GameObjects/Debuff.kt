@@ -17,12 +17,12 @@ class Debuff(koordinatenVector : Vector3f, rotationsVector : Vector3f) : Rendera
 
     override fun update(dt: Float, window: GameWindow) {
         rotateLocal(dt*0.15f, 0f, dt*0.15f)
-        rotateAroundPoint(0f, dt*0.1f, 0f, rotateVector)
+        rotateAroundPoint(0f, dt*0.75f, 0f, rotateVector)
     }
 
     override fun init(camera: TronCamera) {
-        PhysicManager.listOfAllCubes.add(this)
-        this.trigger = true
+       // PhysicManager.listOfAllCubes.add(this)
+       // this.trigger = true
 
         //in Szene verschieben
         translateLocal(translateVector)
