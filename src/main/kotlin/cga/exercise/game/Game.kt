@@ -25,8 +25,6 @@ class Game(width: Int,
 
     override fun render(dt: Float, t: Float) = scene.render(dt, t)
 
-    override fun onMouseMove(xpos: Double, ypos: Double) = scene.onMouseMove(xpos, ypos)
-
     override fun onKey(key: Int, scancode: Int, action: Int, mode: Int) = scene.onKey(key, scancode, action, mode)
 
 }

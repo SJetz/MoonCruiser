@@ -13,9 +13,9 @@ import org.joml.Vector2f
 import org.joml.Vector3f
 import org.lwjgl.opengl.GL11
 
-class PowerUp : Renderable() {
+class PowerUp(koordinatenVektor: Vector3f) : Renderable() {
 
-    var translateVector = Vector3f(0f,0.5f,-20f)
+    var translateVector = Vector3f(koordinatenVektor)
     var rotateVector = Vector3f(1f,1f,1f)
 
     override fun update(dt: Float, window: GameWindow) {

@@ -10,14 +10,14 @@ import org.joml.Vector2f
 import org.joml.Vector3f
 import org.lwjgl.opengl.GL11
 
-class Debuff : Renderable() {
+class Debuff(koordinatenVector : Vector3f, rotationsVector : Vector3f) : Renderable() {
 
-    var translateVector = Vector3f(0f,0.5f,20f)
-    var rotateVector = Vector3f(1f,1f,1f)
+    var translateVector = Vector3f(koordinatenVector)
+    var rotateVector = Vector3f(rotationsVector)
 
     override fun update(dt: Float, window: GameWindow) {
-        //rotateLocal(dt, dt, dt)
-        //rotateAroundPoint(0f, 0f, 0f, rotateVector)
+        rotateLocal(dt*0.15f, 0f, dt*0.15f)
+        rotateAroundPoint(0f, dt*0.1f, 0f, rotateVector)
     }
 
     override fun init(camera: TronCamera) {

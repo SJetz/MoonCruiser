@@ -13,7 +13,7 @@ import org.joml.Vector3f
 import org.lwjgl.glfw.GLFW
 
 
-class Car() : Renderable(){
+class Car(movespeed : Float) : Renderable(){
 
     lateinit var carPointLight : PointLight
     lateinit var groundColor : Vector3f
@@ -23,10 +23,10 @@ class Car() : Renderable(){
     lateinit var carSpotLight : SpotLight
     lateinit var carSpotLight2 : SpotLight
 
-    var translateVector = Vector3f(0f,0f,0f)
+    //var translateVector = Vector3f(0f,0f,0f)
+    var movemul = movespeed
 
     override fun update(dt: Float, window: GameWindow) {
-        val movemul = 10f
         val rotatemul = 2.0f
 
         if (window.getKeyState(GLFW.GLFW_KEY_W)) {
@@ -53,7 +53,7 @@ class Car() : Renderable(){
         PhysicManager.listOfAllCubes.add(this)
         this.collider = true
 
-        translateLocal(translateVector)
+        //translateLocal(translateVector)
 
         myCamera = carCam
         //super.myMeshes = ModelLoader.loadModel("assets/Light Cycle/Light Cycle/HQ_movie cycle.obj", Math.toRadians(-90.0f), Math.toRadians(90.0f), 0.0f) ?: throw IllegalArgumentException("Could not load the model")

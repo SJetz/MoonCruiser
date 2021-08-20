@@ -7,7 +7,7 @@ class PhysicManager {
 
         fun checkCollision(j: Cube): Boolean {
             for (i in listOfAllCubes) {
-                if ( i == j)
+                if ( i == j )
                     continue
                 if (CollisionsDetection.CubeinCube(i, j)) {
                     return true

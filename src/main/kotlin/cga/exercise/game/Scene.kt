@@ -5,6 +5,7 @@ import cga.exercise.components.camera.TronCamera
 import cga.exercise.components.light.SpotLight
 import cga.exercise.components.mooncruiser.GameObjects.*
 import cga.exercise.components.mooncruiser.GameObjects.ObjectManager
+import cga.exercise.components.mooncruiser.physic.PhysicManager
 import cga.exercise.components.shader.ShaderProgram
 import cga.framework.GLError
 import cga.framework.GameWindow
@@ -18,7 +19,11 @@ import org.lwjgl.opengl.GL11.*
  */
 class Scene(private val window: GameWindow) {
 
-    var car = Car()
+    var car = Car(0f)
+    //spawn
+    var powerup = PowerUp(Vector3f(0f,0f,0f))
+    var powerup1 = PowerUp(Vector3f(0f,0f,0f))
+    var debuff = Debuff(Vector3f(0f,0f,0f), Vector3f(0f,0f,0f))
 
     //obecjtmanger
     private val objectManager : ObjectManager
@@ -76,7 +81,7 @@ class Scene(private val window: GameWindow) {
         objectManager.addObject(ground)
         ground.setShader(toonShader)
 
-        var car = Car()
+        car = Car(10f)
         car.init(cameraActive)
         objectManager.addObject(car)
         car.setShader(toonShader)
@@ -89,15 +94,21 @@ class Scene(private val window: GameWindow) {
         objectManager.addObject(skybox)
         skybox.setShader(toonShader)
 
-        var debuff = Debuff()
+        //spawn
+        debuff = Debuff(Vector3f(4f,0.5f,-40f), Vector3f(0f,0.5f,-40f))
         debuff.init(cameraActive)
-        objectManager.addObject(debuff)
         debuff.setShader(toonShader)
 
-        var powerup = PowerUp()
+        //spawn
+        powerup = PowerUp(Vector3f(0f,0.5f,-20f))
         powerup.init(cameraActive)
         objectManager.addObject(powerup)
         powerup.setShader(toonShader)
+
+        //spawn
+        powerup1 = PowerUp(Vector3f(0f,0.5f,-40f))
+        powerup1.init(cameraActive)
+        powerup1.setShader(toonShader)
 
         //initial opengl state
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f); GLError.checkThrow()
@@ -124,27 +135,25 @@ class Scene(private val window: GameWindow) {
 
         if(window.getKeyState(GLFW_KEY_LEFT_SHIFT)) {
             cameraActive = cameraBack
-
         }else
             cameraActive = cameraFront
+
+        //spawn
+        if (PhysicManager.checkCollision(powerup) == true){
+            objectManager.removeObject(powerup)
+                car.movemul = 15f
+                objectManager.addObject(powerup1)
+                objectManager.addObject(debuff)
+            }
+        if (PhysicManager.checkCollision(powerup1) == true) {
+                objectManager.removeObject(powerup1)
+                objectManager.removeObject(debuff)
+        }
     }
+
+
 
     fun onKey(key: Int, scancode: Int, action: Int, mode: Int) {}
-
-    fun onMouseMove(xpos: Double, ypos: Double) {
-        if (!firstMouseMove) {
-            val yawangle = (xpos - oldMouseX).toFloat() * 0.002f
-            val pitchangle = (ypos - oldMouseY).toFloat() * 0.002f
-            if (!window.getKeyState(GLFW_KEY_LEFT_ALT)) {
-                car.rotateLocal(0.0f, yawangle, 0.0f)
-            }
-            else{
-                cameraActive.rotateAroundPoint(0.0f, yawangle, 0.0f, Vector3f(0.0f, 0.0f, 0.0f))
-            }
-        } else firstMouseMove = false
-        oldMouseX = xpos
-        oldMouseY = ypos
-    }
 
     fun cleanup() {}
 }
