@@ -1,6 +1,5 @@
 package cga.exercise.components.geometry
 
-import cga.exercise.components.mooncruiser.physic.Cube
 import org.joml.Matrix4f
 import org.joml.Vector3f
 

@@ -2,10 +2,7 @@ package cga.exercise.components.mooncruiser.GameObjects
 
 import cga.exercise.components.camera.TronCamera
 import cga.exercise.components.geometry.Renderable
-import cga.exercise.components.light.PointLight
 import cga.exercise.components.light.SpotLight
-import cga.exercise.components.mooncruiser.physic.Cube
-import cga.exercise.components.mooncruiser.physic.PhysicManager
 import cga.framework.GameWindow
 import cga.framework.ModelLoader
 import org.joml.Math

@@ -5,11 +5,9 @@ import cga.exercise.components.geometry.Material
 import cga.exercise.components.geometry.Mesh
 import cga.exercise.components.geometry.Renderable
 import cga.exercise.components.geometry.VertexAttribute
-import cga.exercise.components.light.SpotLight
 import cga.exercise.components.texture.Texture2D
 import cga.framework.GameWindow
 import cga.framework.Vertex
-import org.joml.Math
 import org.joml.Vector2f
 import org.joml.Vector3f
 import org.lwjgl.opengl.GL11

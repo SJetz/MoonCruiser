@@ -5,7 +5,6 @@ import cga.exercise.components.geometry.Material
 import cga.exercise.components.geometry.Mesh
 import cga.exercise.components.geometry.Renderable
 import cga.exercise.components.geometry.VertexAttribute
-import cga.exercise.components.mooncruiser.physic.PhysicManager
 import cga.exercise.components.texture.Texture2D
 import cga.framework.GameWindow
 import cga.framework.Vertex
