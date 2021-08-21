@@ -15,11 +15,8 @@ import org.lwjgl.glfw.GLFW
 
 class Car(movespeed : Float) : Renderable(){
 
-    lateinit var carPointLight : PointLight
-    lateinit var groundColor : Vector3f
-    lateinit var carPointLight2 : PointLight
-    lateinit var carPointLight3 : PointLight
 
+    lateinit var groundColor : Vector3f
     lateinit var carSpotLight : SpotLight
     lateinit var carSpotLight2 : SpotLight
 
@@ -58,10 +55,6 @@ class Car(movespeed : Float) : Renderable(){
         super.myMeshes = ModelLoader.loadModel("assets/car/car/sportcar.017.fbx", Math.toRadians(-90.0f), Math.toRadians(180.0f), 0.0f) ?: throw IllegalArgumentException("Could not load the model")
         this.scaleLocal(Vector3f(0.8f, 0.8f, 0.8f))
 
-        //bike point light
-        carPointLight = PointLight(Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f))
-        carPointLight.parent = this
-
         //car scheinwerfer
         carSpotLight = SpotLight(Vector3f(20.0f, 20.0f, 20.0f), Vector3f(-0.5f, 0.25f, -1.75f), Math.toRadians(10.0f), Math.toRadians(30.0f))
         carSpotLight.rotateLocal(Math.toRadians(-10.0f), Math.PI.toFloat(), 0.0f)
@@ -74,21 +67,13 @@ class Car(movespeed : Float) : Renderable(){
 
 
         groundColor = Vector3f(1.0f, 1.0f, 1.0f)
-        carPointLight2 = PointLight(Vector3f(0.0f, 0.0f, 0.0f), Vector3f(-10.0f, 2.0f, -10.0f))
-        carPointLight3 = PointLight(Vector3f(0.0f, 0.0f, 0.0f), Vector3f(10.0f, 2.0f, 10.0f))
     }
 
     override fun render(dt: Float, t: Float) {
         super.render(dt, t)
         val changingColor = Vector3f(Math.abs(Math.sin(t)), 0f, Math.abs(Math.cos(t)))
 
-        carPointLight.lightColor = changingColor
-
         myShader.setUniform("shadingColor", changingColor)
-
-        carPointLight.bind(myShader, "bikePointLight")
-        carPointLight2.bind(myShader, "bikePointLight2")
-        carPointLight3.bind(myShader, "bikePointLight3")
 
         carSpotLight.bind(myShader, "bikeSpotLight", myCamera.calculateViewMatrix())
         carSpotLight2.bind(myShader, "bikeSpotLight2", myCamera.calculateViewMatrix())
