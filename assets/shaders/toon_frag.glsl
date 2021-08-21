@@ -110,7 +110,7 @@ void main(){
     //lighting below is calcutaled using blinn phong
 
     //the dot product is need to get a relastic style of illumination, depnig on the lights direction
-    float NdotL = dot(vertexData.todirection*-1, N);
+    float NdotL = dot(vertexData.todirection-1, N);
 
     //the lower and upper bounce a close together in order to mainten a relatively sharp, toon edge
     //smoothstep creates a interpolation between the 2 values to avoide a jagged break
@@ -143,6 +143,6 @@ void main(){
     rimIntensity = smoothstep(vertexData.torimamount - 0.01, vertexData.torimamount + 0.01, rimIntensity);
     vec4 rim = rimIntensity * vertexData.torimcolor;
 
-    color = (light + vertexData.toambientcolor + specular + rim) * vertexData.tocolor * precolor;
+    color = (light + vertexData.toambientcolor + specular + rim) * vertexData.tocolor * precolor*1.5;
 
 }

@@ -2,7 +2,6 @@ package cga.exercise.components.mooncruiser.GameObjects
 
 import cga.exercise.components.camera.TronCamera
 import cga.exercise.components.geometry.*
-import cga.exercise.components.mooncruiser.physic.PhysicManager
 import cga.exercise.components.texture.Texture2D
 import cga.framework.GameWindow
 import cga.framework.Vertex

@@ -2,10 +2,10 @@ package cga.exercise.game
 
 import cga.exercise.components.camera.Aspectratio.Companion.custom
 import cga.exercise.components.camera.TronCamera
-import cga.exercise.components.geometry.Renderable
 
 import cga.exercise.components.mooncruiser.GameObjects.*
 import cga.exercise.components.mooncruiser.GameObjects.ObjectManager
+import cga.exercise.components.mooncruiser.physic.PhysicManager
 
 import cga.exercise.components.shader.ShaderProgram
 import cga.framework.GLError
@@ -21,15 +21,16 @@ import org.lwjgl.opengl.GL11.*
 class Scene(private val window: GameWindow) {
 
     var car = Car(0f)
+    var powerupStarter = PowerUp(Vector3f(0f,0f,0f))
     var powerup = PowerUp(Vector3f(0f,0f,0f))
     var debuff = Debuff(Vector3f(0f,0f,0f), Vector3f(0f,0f,0f))
+    var listOfDebuffs = mutableListOf<Debuff>()
+    var listOfPowerUps = mutableListOf<PowerUp>()
 
     //obecjtmanger
     private val objectManager : ObjectManager
 
     //shader
-    private val staticShader = ShaderProgram("assets/shaders/tron_vert.glsl", "assets/shaders/tron_frag.glsl")
-    private val simpleShader = ShaderProgram("assets/shaders/simple_vert.glsl", "assets/shaders/simple_frag.glsl")
     private val toonShader = ShaderProgram("assets/shaders/toon_vert.glsl", "assets/shaders/toon_frag.glsl")
 
     var shader: ShaderProgram = toonShader
@@ -45,13 +46,6 @@ class Scene(private val window: GameWindow) {
     private var firstMouseMove = true
 
 
-    fun checkForCollision(renderable1: Renderable, renderable2: Renderable) : Float{
-        val xDistance=renderable1.getPosition().x-renderable2.getPosition().x
-        val yDistance=renderable1.getPosition().y-renderable2.getPosition().y
-        val zDistance=renderable1.getPosition().z-renderable2.getPosition().z
-        return Math.sqrt((xDistance*xDistance).toDouble()+ (yDistance*yDistance).toDouble()+(zDistance*zDistance).toDouble()).toFloat()
-    }
-
     //scene setup
     init {
 
@@ -60,14 +54,14 @@ class Scene(private val window: GameWindow) {
             custom(window.framebufferWidth, window.framebufferHeight),
             Math.toRadians(90.0f),
             0.1f,
-            100.0f
+            1000.0f
         )
 
         cameraBack = TronCamera(
             custom(window.framebufferWidth, window.framebufferHeight),
             Math.toRadians(90.0f),
             0.1f,
-            100.0f
+            1000.0f
         )
 
         cameraActive = cameraFront
@@ -90,7 +84,7 @@ class Scene(private val window: GameWindow) {
         objectManager.addObject(ground)
         ground.setShader(shader)
 
-        car = Car(10f)
+        car = Car(15f)
         car.init(cameraActive)
         objectManager.addObject(car)
         car.setShader(shader)
@@ -103,17 +97,36 @@ class Scene(private val window: GameWindow) {
         objectManager.addObject(skybox)
         skybox.setShader(shader)
 
-
-        debuff = Debuff(Vector3f(0f,1f,-50f), Vector3f(0f,0f,0f))
+        //DEBUFFS
+        var x = 0
+        while (x < 5){
+        debuff = Debuff(Vector3f(Math.random().toFloat()*50, 1f, Math.random().toFloat()*50), Vector3f(Math.random().toFloat()*50, Math.random().toFloat()*50, Math.random().toFloat()*50))
         debuff.init(cameraActive)
-        objectManager.addObject(debuff)
         debuff.setShader(shader)
+        listOfDebuffs.add(debuff)
+        x++
+        }
+        for(i in listOfDebuffs){
+            objectManager.addObject(i)
+        }
 
+        //POWERUPS
+        powerupStarter = PowerUp(Vector3f(Math.random().toFloat()*50,1f,Math.random().toFloat()*50))
+        powerupStarter.init(cameraActive)
+        objectManager.addObject(powerupStarter)
+        powerupStarter.setShader(shader)
 
-        powerup = PowerUp(Vector3f(0f,1f,-20f))
-        powerup.init(cameraActive)
-        objectManager.addObject(powerup)
-        powerup.setShader(shader)
+        var y = 0
+        while (y < 5){
+            powerup = PowerUp(Vector3f(Math.random().toFloat()*50, 1f, Math.random().toFloat()*50))
+            powerup.init(cameraActive)
+            powerup.setShader(shader)
+            listOfPowerUps.add(powerup)
+            y++
+        }
+       /* for(i in listOfPowerUps){
+            objectManager.addObject(i)
+        }*/
 
 
         //initial opengl state
@@ -136,6 +149,7 @@ class Scene(private val window: GameWindow) {
 
     //camera update
     fun update(dt: Float, t: Float) {
+
         objectManager.update(dt,window)
 
         if(window.getKeyState(GLFW_KEY_LEFT_SHIFT)) {
@@ -143,13 +157,18 @@ class Scene(private val window: GameWindow) {
         }else
             cameraActive = cameraFront
 
-        if(checkForCollision(car,powerup) <= 2f ){
-           objectManager.removeObject(powerup)
-           car.movemul = 20f
-        }else if (checkForCollision(car,debuff) <= 2f){
-            objectManager.removeObject(debuff)
-            car.movemul = 5f
-    }
+            if(PhysicManager.checkForCollision(car,powerupStarter) <= 2f ){
+                objectManager.removeObject(powerupStarter)
+                car.movemul = 25f
+            }else{
+                for(i in listOfDebuffs){
+                if (PhysicManager.checkForCollision(car,i) <= 2f){
+                    objectManager.removeObject(i)
+                    car.movemul = 10f
+                }
+                }
+            }
+
     }
 
     fun onKey(key: Int, scancode: Int, action: Int, mode: Int) {}

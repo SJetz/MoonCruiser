@@ -10,7 +10,7 @@ import cga.framework.GameWindow
  */
 open class Renderable() : Cube(), IRenderable {
     var myMeshes: MutableList<Mesh> = mutableListOf()
-    var myShader: ShaderProgram = ShaderProgram("assets/shaders/tron_vert.glsl", "assets/shaders/tron_frag.glsl")
+    var myShader: ShaderProgram = ShaderProgram("assets/shaders/toon_vert.glsl", "assets/shaders/toon_frag.glsl")
     lateinit var myCamera : TronCamera
 
     /**

@@ -29,10 +29,10 @@ class Ground : Renderable(){
         groundDiff.setTexParams(GL11.GL_REPEAT, GL11.GL_REPEAT, GL11.GL_LINEAR_MIPMAP_LINEAR, GL11.GL_LINEAR)
         val groundSpecular = Texture2D("assets/textures/space.jpeg", true)
         groundSpecular.setTexParams(GL11.GL_REPEAT, GL11.GL_REPEAT, GL11.GL_LINEAR_MIPMAP_LINEAR, GL11.GL_LINEAR)
-        val groundEmit = Texture2D("assets/textures/ground_emit.png", true)
+        val groundEmit = Texture2D("assets/textures/moonsurface.jpg", true)
         groundEmit.setTexParams(GL11.GL_REPEAT, GL11.GL_REPEAT, GL11.GL_LINEAR_MIPMAP_LINEAR, GL11.GL_LINEAR)
         //reihenfolge relevant (diff,emit,spec)
-        var groundMaterial = Material(groundDiff, groundEmit, groundSpecular, 60f, Vector2f(64.0f, 64.0f))
+        var groundMaterial = Material(groundDiff, groundEmit, groundSpecular, 60f, Vector2f(5.0f, 5.0f))
 
         //load an object and create a mesh
         val gres = OBJLoader.loadOBJ("assets/models/ground.obj")

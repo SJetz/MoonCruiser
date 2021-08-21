@@ -18,7 +18,7 @@ class PowerUp(koordinatenVektor: Vector3f) : Renderable() {
     var translateVector = Vector3f(koordinatenVektor)
 
     override fun update(dt: Float, window: GameWindow) {
-            rotateLocal(dt, dt, dt)
+        rotateLocal(dt*0.15f, 0f, dt*0.15f)
     }
 
     override fun init(camera: TronCamera) {

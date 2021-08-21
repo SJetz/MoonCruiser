@@ -20,7 +20,7 @@ class TronCamera(var aspectratio: Aspectratio = Aspectratio.WIDESCREEN,
     }
 
     fun calculateProjectionMatrix(): Matrix4f {
-        return Matrix4f().perspective(fov, aspectratio.ratio, 0.1f, 1000f)
+        return Matrix4f().perspective(fov, aspectratio.ratio, near, far)
     }
 
     fun bind(shader: ShaderProgram) {

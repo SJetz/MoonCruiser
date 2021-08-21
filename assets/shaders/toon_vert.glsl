@@ -12,10 +12,6 @@ uniform mat4 proj_matrix;
 uniform vec2 tcMultiplier;
 
 // lights
-uniform vec3 bikePointLightPosition;
-uniform vec3 bikePointLight2Position;
-uniform vec3 bikePointLight3Position;
-
 uniform vec3 bikeSpotLightPosition;
 uniform vec3 bikeSpotLight2Position;
 

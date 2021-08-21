@@ -51,17 +51,16 @@ class Car(movespeed : Float) : Renderable(){
        // this.collider = true
 
         myCamera = carCam
-        //super.myMeshes = ModelLoader.loadModel("assets/Light Cycle/Light Cycle/HQ_movie cycle.obj", Math.toRadians(-90.0f), Math.toRadians(90.0f), 0.0f) ?: throw IllegalArgumentException("Could not load the model")
         super.myMeshes = ModelLoader.loadModel("assets/car/car/sportcar.017.fbx", Math.toRadians(-90.0f), Math.toRadians(180.0f), 0.0f) ?: throw IllegalArgumentException("Could not load the model")
         this.scaleLocal(Vector3f(0.8f, 0.8f, 0.8f))
 
         //car scheinwerfer
-        carSpotLight = SpotLight(Vector3f(20.0f, 20.0f, 20.0f), Vector3f(-0.5f, 0.25f, -1.75f), Math.toRadians(10.0f), Math.toRadians(30.0f))
+        carSpotLight = SpotLight(Vector3f(50.0f, 50.0f, 50.0f), Vector3f(-0.5f, 0.25f, -1.75f), Math.toRadians(10.0f), Math.toRadians(30.0f))
         carSpotLight.rotateLocal(Math.toRadians(-10.0f), Math.PI.toFloat(), 0.0f)
         carSpotLight.parent = this
 
         //car scheinwerfer 2
-        carSpotLight2 = SpotLight(Vector3f(20.0f, 20.0f, 20.0f), Vector3f(0.5f, 0.25f, -1.75f), Math.toRadians(10.0f), Math.toRadians(30.0f))
+        carSpotLight2 = SpotLight(Vector3f(50.0f, 50.0f, 50.0f), Vector3f(0.5f, 0.25f, -1.75f), Math.toRadians(10.0f), Math.toRadians(30.0f))
         carSpotLight2.rotateLocal(Math.toRadians(-10.0f), Math.PI.toFloat(), 0.0f)
         carSpotLight2.parent = this
 
@@ -71,6 +70,7 @@ class Car(movespeed : Float) : Renderable(){
 
     override fun render(dt: Float, t: Float) {
         super.render(dt, t)
+
         val changingColor = Vector3f(Math.abs(Math.sin(t)), 0f, Math.abs(Math.cos(t)))
 
         myShader.setUniform("shadingColor", changingColor)
