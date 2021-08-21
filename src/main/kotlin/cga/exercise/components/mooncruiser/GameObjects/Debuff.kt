@@ -15,7 +15,7 @@ class Debuff(koordinatenVector : Vector3f, rotationsVector : Vector3f) : Rendera
     var rotateVector = Vector3f(rotationsVector)
 
     override fun update(dt: Float, window: GameWindow) {
-        rotateLocal(dt*0.15f, 0f, dt*0.15f)
+        rotateLocal(dt, dt, dt)
         rotateAroundPoint(0f, dt*0.75f, 0f, rotateVector)
     }
 

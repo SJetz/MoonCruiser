@@ -25,7 +25,9 @@ open class Renderable() : Cube(), IRenderable {
         }
     }
 
-    override fun update(dt: Float, window: GameWindow){}
+    override fun update(dt: Float, window: GameWindow){
+
+    }
 
     override fun setShader(shader: ShaderProgram) {
         myShader = shader

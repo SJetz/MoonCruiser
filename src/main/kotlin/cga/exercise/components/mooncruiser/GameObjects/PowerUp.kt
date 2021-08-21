@@ -17,7 +17,7 @@ class PowerUp(koordinatenVektor: Vector3f) : Renderable() {
     var translateVector = Vector3f(koordinatenVektor)
 
     override fun update(dt: Float, window: GameWindow) {
-        rotateLocal(dt*0.15f, 0f, dt*0.15f)
+        rotateLocal(dt, dt, dt)
     }
 
     override fun init(camera: TronCamera) {
@@ -116,7 +116,13 @@ class PowerUp(koordinatenVektor: Vector3f) : Renderable() {
         val mesh = Mesh(vertexdata, indexdata, vertexAttributes, powerupMaterial )
         this.myMeshes.add(mesh)
 
-
-
     }
+
+    fun setPoition(deltaPosition : Vector3f){
+        modelMatrix.identity()
+        modelMatrix.translate(deltaPosition)
+    }
+
+
+
 }

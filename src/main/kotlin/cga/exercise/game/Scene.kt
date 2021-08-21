@@ -26,6 +26,7 @@ class Scene(private val window: GameWindow) {
     var debuff = Debuff(Vector3f(0f,0f,0f), Vector3f(0f,0f,0f))
     var listOfDebuffs = mutableListOf<Debuff>()
     var listOfPowerUps = mutableListOf<PowerUp>()
+    var k = 1
 
     //obecjtmanger
     private val objectManager : ObjectManager
@@ -113,8 +114,8 @@ class Scene(private val window: GameWindow) {
         //POWERUPS
         powerupStarter = PowerUp(Vector3f(Math.random().toFloat()*50,1f,Math.random().toFloat()*50))
         powerupStarter.init(cameraActive)
-        objectManager.addObject(powerupStarter)
         powerupStarter.setShader(shader)
+        objectManager.addObject(powerupStarter)
 
         var y = 0
         while (y < 5){
@@ -124,10 +125,6 @@ class Scene(private val window: GameWindow) {
             listOfPowerUps.add(powerup)
             y++
         }
-       /* for(i in listOfPowerUps){
-            objectManager.addObject(i)
-        }*/
-
 
         //initial opengl state
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f); GLError.checkThrow()
@@ -157,9 +154,15 @@ class Scene(private val window: GameWindow) {
         }else
             cameraActive = cameraFront
 
+
             if(PhysicManager.checkForCollision(car,powerupStarter) <= 2f ){
                 objectManager.removeObject(powerupStarter)
                 car.movemul = 25f
+                if (k < 11) {
+                    powerupStarter.setPoition(Vector3f(Math.random().toFloat() * 50, 1f, Math.random().toFloat() * 50))
+                    objectManager.addObject(powerupStarter)
+                    k++
+                }
             }else{
                 for(i in listOfDebuffs){
                 if (PhysicManager.checkForCollision(car,i) <= 2f){
