@@ -28,6 +28,7 @@ class Scene(private val window: GameWindow) {
     val powerUpNumber = 10f
     val debuffNumber = 5f
     var debuffCounter = 0f
+    var ground = Ground()
 
     //timer
     val timer = 2.0f
@@ -85,7 +86,7 @@ class Scene(private val window: GameWindow) {
         objectManager = ObjectManager()
 
         //init gameobjects and assigne to objectmanager and set shaders
-        var ground = Ground()
+        ground = Ground()
         ground.init(cameraActive)
         objectManager.addObject(ground)
         ground.setShader(shader)
@@ -117,7 +118,7 @@ class Scene(private val window: GameWindow) {
         }
 
         //POWERUPS
-        powerupStarter = PowerUp(Vector3f(Math.random().toFloat()*50,1f,Math.random().toFloat()*50))
+        powerupStarter = PowerUp(Vector3f(Math.random().toFloat()*60,1f,Math.random().toFloat()*60))
         powerupStarter.init(cameraActive)
         powerupStarter.setShader(shader)
         objectManager.addObject(powerupStarter)
@@ -167,11 +168,12 @@ class Scene(private val window: GameWindow) {
                 timeHasPast = timer
                 car.movemul = topspeed
                 if (k < powerUpNumber) {
-                    powerupStarter.setPoition(Vector3f(Math.random().toFloat() * 50, 1f, Math.random().toFloat() * 50))
+                    powerupStarter.setPoition(Vector3f(Math.random().toFloat() * 60, 1f, Math.random().toFloat() * 60))
                     objectManager.addObject(powerupStarter)
                     k++
                     if(k == powerUpNumber){
                         resetScene()
+                        println("VICTORY")
                     }
                 }
             }
@@ -186,11 +188,28 @@ class Scene(private val window: GameWindow) {
                 car.movemul = lowspeed
                    if(debuffCounter == debuffNumber){
                         resetScene()
+                        println("DEFEATE")
                    }
             }
         }
         if (listOfDebuffs.contains(debuffKicker)){
             listOfDebuffs.remove(debuffKicker)
+        }
+
+        if(car.getPosition().x >= 108f ){
+            car.setPoition(Vector3f(car.getPosition().x-8,0f,car.getPosition().z))
+        }
+
+        if(car.getPosition().x <= -108f ){
+            car.setPoition(Vector3f(car.getPosition().x+8,0f,car.getPosition().z))
+        }
+
+        if(car.getPosition().z >= 108f ){
+            car.setPoition(Vector3f(car.getPosition().x,0f,car.getPosition().z-8))
+        }
+
+        if(car.getPosition().z <= -108f ){
+            car.setPoition(Vector3f(car.getPosition().x,0f,car.getPosition().z+8))
         }
 
     }

@@ -78,4 +78,9 @@ class Car(movespeed : Float) : Renderable(){
         myShader.setUniform("shadingColor", groundColor)
     }
 
+    fun setPoition(deltaPosition : Vector3f){
+        modelMatrix.identity()
+        modelMatrix.translate(deltaPosition)
+    }
+
 }
