@@ -8,7 +8,7 @@ import cga.framework.GameWindow
 /**
  * Extends Transformable such that the object can render Mesh objects transformed by Transformable
  */
-open class Renderable() : Cube(), IRenderable {
+open class Renderable() : Transformable(parent = null), IRenderable {
     var myMeshes: MutableList<Mesh> = mutableListOf()
     var myShader: ShaderProgram = ShaderProgram("assets/shaders/toon_vert.glsl", "assets/shaders/toon_frag.glsl")
     lateinit var myCamera : TronCamera

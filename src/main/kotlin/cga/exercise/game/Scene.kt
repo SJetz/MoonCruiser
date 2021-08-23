@@ -22,14 +22,22 @@ class Scene(private val window: GameWindow) {
 
     var car = Car(0f)
     var powerupStarter = PowerUp(Vector3f(0f,0f,0f))
-    var powerup = PowerUp(Vector3f(0f,0f,0f))
     var debuff = Debuff(Vector3f(0f,0f,0f), Vector3f(0f,0f,0f))
     var listOfDebuffs = mutableListOf<Debuff>()
-    var listOfPowerUps = mutableListOf<PowerUp>()
-    var k = 1
+    var k = 0f
+    val powerUpNumber = 10f
+    val debuffNumber = 5f
+    var debuffCounter = 0f
+
+    //timer
+    val timer = 2.0f
+    var timeHasPast = 0.0f
+    val topspeed = 25.0f
+    val lowspeed = 5.0f
+    val defaultSpeed = 15.0f
 
     //obecjtmanger
-    private val objectManager : ObjectManager
+    lateinit var objectManager : ObjectManager
 
     //shader
     private val toonShader = ShaderProgram("assets/shaders/toon_vert.glsl", "assets/shaders/toon_frag.glsl")
@@ -37,19 +45,16 @@ class Scene(private val window: GameWindow) {
     var shader: ShaderProgram = toonShader
 
     //camera
-    var cameraFront : TronCamera
-    var cameraBack : TronCamera
-    var cameraActive : TronCamera
+    lateinit var cameraFront : TronCamera
+    lateinit var cameraBack : TronCamera
+    lateinit var cameraActive : TronCamera
 
     //mouse
     private var oldMouseX = 0.0
     private var oldMouseY = 0.0
     private var firstMouseMove = true
 
-
-    //scene setup
-    init {
-
+    fun load(){
         //setup cameraActive, cameraFront, cameraBack
         cameraFront = TronCamera(
             custom(window.framebufferWidth, window.framebufferHeight),
@@ -85,7 +90,7 @@ class Scene(private val window: GameWindow) {
         objectManager.addObject(ground)
         ground.setShader(shader)
 
-        car = Car(15f)
+        car = Car(defaultSpeed)
         car.init(cameraActive)
         objectManager.addObject(car)
         car.setShader(shader)
@@ -100,12 +105,12 @@ class Scene(private val window: GameWindow) {
 
         //DEBUFFS
         var x = 0
-        while (x < 5){
-        debuff = Debuff(Vector3f(Math.random().toFloat()*50, 1f, Math.random().toFloat()*50), Vector3f(Math.random().toFloat()*50, Math.random().toFloat()*50, Math.random().toFloat()*50))
-        debuff.init(cameraActive)
-        debuff.setShader(shader)
-        listOfDebuffs.add(debuff)
-        x++
+        while (x < debuffNumber){
+            debuff = Debuff(Vector3f(Math.random().toFloat()*50, 1f, Math.random().toFloat()*50), Vector3f(Math.random().toFloat()*50, Math.random().toFloat()*50, Math.random().toFloat()*50))
+            debuff.init(cameraActive)
+            debuff.setShader(shader)
+            listOfDebuffs.add(debuff)
+            x++
         }
         for(i in listOfDebuffs){
             objectManager.addObject(i)
@@ -117,21 +122,15 @@ class Scene(private val window: GameWindow) {
         powerupStarter.setShader(shader)
         objectManager.addObject(powerupStarter)
 
-        var y = 0
-        while (y < 5){
-            powerup = PowerUp(Vector3f(Math.random().toFloat()*50, 1f, Math.random().toFloat()*50))
-            powerup.init(cameraActive)
-            powerup.setShader(shader)
-            listOfPowerUps.add(powerup)
-            y++
-        }
-
         //initial opengl state
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f); GLError.checkThrow()
         glDisable(GL_CULL_FACE); GLError.checkThrow()
         glEnable(GL_DEPTH_TEST); GLError.checkThrow()
         glDepthFunc(GL_LESS); GLError.checkThrow()
-
+    }
+    //scene setup
+    init {
+        load()
     }
 
     fun render(dt: Float, t: Float) {
@@ -144,10 +143,18 @@ class Scene(private val window: GameWindow) {
 
     }
 
-    //camera update
     fun update(dt: Float, t: Float) {
 
         objectManager.update(dt,window)
+
+        if(timeHasPast<0){
+            timeHasPast = 0f
+        }else
+            timeHasPast -= dt
+
+        if (timeHasPast <= 0f){
+            car.movemul = defaultSpeed
+        }
 
         if(window.getKeyState(GLFW_KEY_LEFT_SHIFT)) {
             cameraActive = cameraBack
@@ -157,24 +164,53 @@ class Scene(private val window: GameWindow) {
 
             if(PhysicManager.checkForCollision(car,powerupStarter) <= 2f ){
                 objectManager.removeObject(powerupStarter)
-                car.movemul = 25f
-                if (k < 11) {
+                timeHasPast = timer
+                car.movemul = topspeed
+                if (k < powerUpNumber) {
                     powerupStarter.setPoition(Vector3f(Math.random().toFloat() * 50, 1f, Math.random().toFloat() * 50))
                     objectManager.addObject(powerupStarter)
                     k++
-                }
-            }else{
-                for(i in listOfDebuffs){
-                if (PhysicManager.checkForCollision(car,i) <= 2f){
-                    objectManager.removeObject(i)
-                    car.movemul = 10f
-                }
+                    if(k == powerUpNumber){
+                        resetScene()
+                    }
                 }
             }
+
+        var debuffKicker = Debuff(Vector3f(0f,0f,0f), Vector3f(0f,0f,0f))
+        for(i in listOfDebuffs){
+            if (PhysicManager.checkForCollision(car,i) <= 2f){
+                debuffKicker = i
+                objectManager.removeObject(i)
+                debuffCounter++
+                timeHasPast = timer
+                car.movemul = lowspeed
+                   if(debuffCounter == debuffNumber){
+                        resetScene()
+                   }
+            }
+        }
+        if (listOfDebuffs.contains(debuffKicker)){
+            listOfDebuffs.remove(debuffKicker)
+        }
 
     }
 
     fun onKey(key: Int, scancode: Int, action: Int, mode: Int) {}
+
+    fun resetScene(){
+        car = Car(0f)
+        powerupStarter = PowerUp(Vector3f(0f,0f,0f))
+        debuff = Debuff(Vector3f(0f,0f,0f), Vector3f(0f,0f,0f))
+        listOfDebuffs = mutableListOf<Debuff>()
+        k = 0f
+        debuffCounter = 0f
+
+        //timer
+        timeHasPast = 0.0f
+
+        objectManager.reset()
+        load()
+    }
 
     fun cleanup() {}
 }

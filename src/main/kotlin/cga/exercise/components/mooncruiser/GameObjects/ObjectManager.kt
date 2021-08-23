@@ -37,4 +37,9 @@ class ObjectManager {
             i.render(dt, t)
         }
     }
+
+    fun reset (){
+        listOfGameObjects.clear()
+        listToRemove.clear()
+    }
 }
