@@ -44,6 +44,7 @@ class ObjectManager {
         listToRemove.clear()
     }
 
+    //updated Renderables
     fun setCamera (camera: TronCamera){
         for(n in listOfGameObjects){
             n.myCamera = camera
