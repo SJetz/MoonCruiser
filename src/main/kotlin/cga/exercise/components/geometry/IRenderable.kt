@@ -9,4 +9,5 @@ interface IRenderable {
     fun update(dt: Float, window: GameWindow)
     fun setShader(shaderProgram: ShaderProgram)
     fun init(camera: TronCamera)
+
 }

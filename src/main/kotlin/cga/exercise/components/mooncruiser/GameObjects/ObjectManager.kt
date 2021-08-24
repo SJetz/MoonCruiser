@@ -1,5 +1,6 @@
 package cga.exercise.components.mooncruiser.GameObjects
 
+import cga.exercise.components.camera.TronCamera
 import cga.exercise.components.geometry.Renderable
 import cga.framework.GameWindow
 
@@ -41,5 +42,11 @@ class ObjectManager {
     fun reset (){
         listOfGameObjects.clear()
         listToRemove.clear()
+    }
+
+    fun setCamera (camera: TronCamera){
+        for(n in listOfGameObjects){
+            n.myCamera = camera
+        }
     }
 }

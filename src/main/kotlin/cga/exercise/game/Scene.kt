@@ -42,6 +42,7 @@ class Scene(private val window: GameWindow) {
 
     //shader
     private val toonShader = ShaderProgram("assets/shaders/toon_vert.glsl", "assets/shaders/toon_frag.glsl")
+    private val skyboxShader = ShaderProgram("assets/shaders/skybox_vert.glsl", "assets/shaders/skybox_frag.glsl")
 
     var shader: ShaderProgram = toonShader
 
@@ -102,7 +103,7 @@ class Scene(private val window: GameWindow) {
         var skybox = Skybox()
         skybox.init(cameraActive)
         objectManager.addObject(skybox)
-        skybox.setShader(shader)
+        skybox.setShader(skyboxShader)
 
         //DEBUFFS
         var x = 0
@@ -138,10 +139,6 @@ class Scene(private val window: GameWindow) {
         glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
 
         objectManager.render(dt,t)
-
-        shader.use()
-        cameraActive.bind(shader)
-
     }
 
     fun update(dt: Float, t: Float) {
@@ -162,6 +159,7 @@ class Scene(private val window: GameWindow) {
         }else
             cameraActive = cameraFront
 
+        objectManager.setCamera(cameraActive)
 
             if(PhysicManager.checkForCollision(car,powerupStarter) <= 2f ){
                 objectManager.removeObject(powerupStarter)

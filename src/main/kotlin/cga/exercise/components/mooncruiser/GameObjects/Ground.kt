@@ -21,6 +21,7 @@ class Ground : Renderable(){
     }
 
     override fun init(camera: TronCamera) {
+        myCamera = camera
 
         scaleLocal(translateVector)
 

@@ -5,14 +5,21 @@ import cga.exercise.components.geometry.Material
 import cga.exercise.components.geometry.Mesh
 import cga.exercise.components.geometry.Renderable
 import cga.exercise.components.geometry.VertexAttribute
+import cga.exercise.components.light.SpotLight
 import cga.exercise.components.texture.Texture2D
 import cga.framework.GameWindow
 import cga.framework.Vertex
+import org.joml.Math
 import org.joml.Vector2f
 import org.joml.Vector3f
 import org.lwjgl.opengl.GL11
 
 class Skybox : Renderable() {
+
+
+    lateinit var SpotLight : SpotLight
+
+
 
     override fun update(dt: Float, window: GameWindow) {
 
@@ -109,9 +116,16 @@ class Skybox : Renderable() {
 
         scaleLocal(Vector3f(220f,220f,220f))
 
+        SpotLight = SpotLight(Vector3f(50.0f, 50.0f, 50.0f), Vector3f(-0.5f, 0.25f, -1.75f), Math.toRadians(10.0f), Math.toRadians(30.0f))
     }
 
+    override fun render(dt: Float, t: Float) {
+        super.render(dt, t)
+        SpotLight.bind(myShader, "bikeSpotLight", myCamera.calculateViewMatrix())
+
+    }
 }
+
 
 
 
