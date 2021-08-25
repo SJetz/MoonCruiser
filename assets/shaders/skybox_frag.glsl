@@ -5,7 +5,7 @@ in struct VertexData
 {
     vec2 textureCoordinate;
     vec3 normal;
-//light stuff
+    //light
     vec3 todirection;
     float tointensity;
     vec4 todiffuse;
@@ -16,10 +16,10 @@ in struct VertexData
     vec4 torimcolor;
     float torimamount;
     float torimthreshhold;
-//light stuff
-    vec3 toCamera;
     vec3 toBikeSpotLight;
     vec3 toBikeSpotLight2;
+    //camera
+    vec3 toCamera;
 } vertexData;
 
 uniform sampler2D materialDiff;
@@ -87,24 +87,19 @@ void main(){
 
     vec3 emit_term = emitColor * shadingColor;
 
-    vec3 sshade =  shade(N, Lbsl, V, diffColor, specColor, materialShininess);
-    vec3 sshade2 =  shade(N, Lbsl2, V, diffColor, specColor, materialShininess);
-
     vec3 intSpotLight = getSpotLightIntensity(bikeSpotLightColor, vertexData.toBikeSpotLight, bikeSpotLightDirection, bikeSpotLightCone);
     vec3 intSpotLight2 = getSpotLightIntensity(bikeSpotLight2Color, vertexData.toBikeSpotLight2, bikeSpotLight2Direction, bikeSpotLight2Cone);
 
-    color = vec4(emit_term +
-    sshade * intSpotLight +
-    sshade2 * intSpotLight2, 1.0f);
-
     // Blinn-Phong shading:
-    sshade =  shadeBlinn(N, Lbsl, V, diffColor, specColor, materialShininess);
-    sshade2 =  shadeBlinn(N, Lbsl2, V, diffColor, specColor, materialShininess);
+    vec3 sshade =  shadeBlinn(N, Lbsl, V, diffColor, specColor, materialShininess);
+    vec3 sshade2 =  shadeBlinn(N, Lbsl2, V, diffColor, specColor, materialShininess);
 
+    //texture mit spotlight
     vec4 precolor = vec4(emit_term +
     sshade * intSpotLight +
     sshade2 * intSpotLight2, 1.0f);
 
+    //lichteinflüsse
     color = (vertexData.tocolor + vertexData.toambientcolor ) * vertexData.tocolor * precolor;
 
 

@@ -80,7 +80,7 @@ class Car(movespeed : Float) : Renderable(){
             rotateLocal( 0.0f, -dt * rotatemul,0.0f)
         }
         if(window.getKeyState(GLFW.GLFW_KEY_SPACE)&& !buttonPressed) {
-           if(activeLight==lightOn&& activeLight2 ==lightOn2){
+           if(activeLight==lightOn && activeLight2 ==lightOn2){
                activeLight = lightOff
                activeLight2 = lightOff2
            }else{
