@@ -1,28 +1,14 @@
 package cga.exercise.components.geometry
 
-import cga.exercise.components.camera.Aspectratio
 import cga.exercise.components.camera.TronCamera
-import cga.exercise.components.mooncruiser.physic.Cube
 import cga.exercise.components.shader.ShaderProgram
 import cga.framework.GameWindow
-import org.joml.Math
-import org.joml.Vector3f
-import org.lwjgl.glfw.GLFW
 
-/**
- * Extends Transformable such that the object can render Mesh objects transformed by Transformable
- */
 open class Renderable() : Transformable(parent = null), IRenderable {
     var myMeshes: MutableList<Mesh> = mutableListOf()
     var myShader: ShaderProgram = ShaderProgram("assets/shaders/toon_vert.glsl", "assets/shaders/toon_frag.glsl")
     var myCamera : TronCamera = TronCamera()
 
-
-
-    /**
-     * Renders all meshes attached to this Renderable, applying the transformation matrix to
-     * each of them
-     */
     override fun render(dt: Float, t: Float) {
         myShader.use()
         myCamera.bind(myShader)
@@ -32,10 +18,7 @@ open class Renderable() : Transformable(parent = null), IRenderable {
         }
     }
 
-    override fun update(dt: Float, window: GameWindow){
-
-
-    }
+    override fun update(dt: Float, window: GameWindow){}
 
     override fun setShader(shader: ShaderProgram) {
         myShader = shader
@@ -43,7 +26,6 @@ open class Renderable() : Transformable(parent = null), IRenderable {
 
     override fun init(camera: TronCamera){
         myCamera = camera
-
     }
 
 

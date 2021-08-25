@@ -19,7 +19,7 @@ import org.lwjgl.opengl.GL11.*
  * Created by Fabian on 16.09.2017.
  */
 class Scene(private val window: GameWindow) {
-
+    //Objekte und Hilfsvariablen
     var car = Car(0f)
     var powerupStarter = PowerUp(Vector3f(0f,0f,0f))
     var debuff = Debuff(Vector3f(0f,0f,0f), Vector3f(0f,0f,0f))
@@ -29,32 +29,24 @@ class Scene(private val window: GameWindow) {
     val debuffNumber = 5f
     var debuffCounter = 0f
     var ground = Ground()
+    lateinit var objectManager : ObjectManager
 
-    //timer
+    //Timer
     val timer = 2.0f
     var timeHasPast = 0.0f
     val topspeed = 25.0f
     val lowspeed = 5.0f
     val defaultSpeed = 15.0f
 
-    //obecjtmanger
-    lateinit var objectManager : ObjectManager
-
-    //shader
+    //Shader
     private val toonShader = ShaderProgram("assets/shaders/toon_vert.glsl", "assets/shaders/toon_frag.glsl")
     private val skyboxShader = ShaderProgram("assets/shaders/skybox_vert.glsl", "assets/shaders/skybox_frag.glsl")
-
     var shader: ShaderProgram = toonShader
 
-    //camera
+    //Kamera
     lateinit var cameraFront : TronCamera
     lateinit var cameraBack : TronCamera
     lateinit var cameraActive : TronCamera
-
-    //mouse
-    private var oldMouseX = 0.0
-    private var oldMouseY = 0.0
-    private var firstMouseMove = true
 
     fun load(){
         //setup cameraActive, cameraFront, cameraBack
@@ -74,19 +66,14 @@ class Scene(private val window: GameWindow) {
 
         cameraActive = cameraFront
 
-        //move cameras a little bit in z direction
         cameraFront.rotateLocal(Math.toRadians(-35.0f), 0.0f, 0.0f)
         cameraFront.translateLocal(Vector3f(0.0f, 0.0f, 8.0f))
 
         cameraBack.rotateLocal(Math.toRadians(-145.0f), 0.0f, Math.toRadians(180.0f))
         cameraBack.translateLocal(Vector3f(0.0f, 0.0f, 8.0f))
 
-
-
-        //init objectmanager
         objectManager = ObjectManager()
 
-        //init gameobjects and assigne to objectmanager and set shaders
         ground = Ground()
         ground.init(cameraActive)
         objectManager.addObject(ground)
@@ -98,7 +85,6 @@ class Scene(private val window: GameWindow) {
         car.setShader(shader)
         cameraActive.parent = car
         cameraBack.parent = car
-
 
         var skybox = Skybox()
         skybox.init(cameraActive)
@@ -124,13 +110,12 @@ class Scene(private val window: GameWindow) {
         powerupStarter.setShader(shader)
         objectManager.addObject(powerupStarter)
 
-        //initial opengl state
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f); GLError.checkThrow()
         glDisable(GL_CULL_FACE); GLError.checkThrow()
         glEnable(GL_DEPTH_TEST); GLError.checkThrow()
         glDepthFunc(GL_LESS); GLError.checkThrow()
     }
-    //scene setup
+
     init {
         load()
     }
@@ -195,24 +180,22 @@ class Scene(private val window: GameWindow) {
         }
 
         if(car.getPosition().x >= 108f ){
-            car.setPoition(Vector3f(car.getPosition().x-8,0f,car.getPosition().z))
+            car.setPosition(Vector3f(car.getPosition().x-8,0f,car.getPosition().z))
         }
 
         if(car.getPosition().x <= -108f ){
-            car.setPoition(Vector3f(car.getPosition().x+8,0f,car.getPosition().z))
+            car.setPosition(Vector3f(car.getPosition().x+8,0f,car.getPosition().z))
         }
 
         if(car.getPosition().z >= 108f ){
-            car.setPoition(Vector3f(car.getPosition().x,0f,car.getPosition().z-8))
+            car.setPosition(Vector3f(car.getPosition().x,0f,car.getPosition().z-8))
         }
 
         if(car.getPosition().z <= -108f ){
-            car.setPoition(Vector3f(car.getPosition().x,0f,car.getPosition().z+8))
+            car.setPosition(Vector3f(car.getPosition().x,0f,car.getPosition().z+8))
         }
 
     }
-
-    fun onKey(key: Int, scancode: Int, action: Int, mode: Int) {}
 
     fun resetScene(){
         car = Car(0f)
@@ -221,10 +204,7 @@ class Scene(private val window: GameWindow) {
         listOfDebuffs = mutableListOf<Debuff>()
         k = 0f
         debuffCounter = 0f
-
-        //timer
         timeHasPast = 0.0f
-
         objectManager.reset()
         load()
     }

@@ -97,9 +97,7 @@ void main(){
     sshade * intSpotLight +
     sshade2 * intSpotLight2, 1.0f);
 
-
     // Blinn-Phong shading:
-
     sshade =  shadeBlinn(N, Lbsl, V, diffColor, specColor, materialShininess);
     sshade2 =  shadeBlinn(N, Lbsl2, V, diffColor, specColor, materialShininess);
 
@@ -107,9 +105,7 @@ void main(){
     sshade * intSpotLight +
     sshade2 * intSpotLight2, 1.0f);
 
-
-
-   color = (vertexData.tocolor + vertexData.toambientcolor ) * vertexData.tocolor * precolor;
+    color = (vertexData.tocolor + vertexData.toambientcolor ) * vertexData.tocolor * precolor;
 
 
 

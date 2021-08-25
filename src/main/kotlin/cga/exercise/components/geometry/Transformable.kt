@@ -5,8 +5,6 @@ import org.joml.Vector3f
 
 open class Transformable(var modelMatrix: Matrix4f = Matrix4f(), var parent: Transformable? = null): ITransformable {
 
-
-
     /**
      * Rotates object around its own origin.
      * @param pitch radiant angle around x-axis ccw

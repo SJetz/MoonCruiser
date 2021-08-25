@@ -24,9 +24,8 @@ class PowerUp(koordinatenVektor: Vector3f) : Renderable() {
        // PhysicManager.listOfAllCubes.add(this)
        // this.trigger = true
 
-        //in Szene verschieben
-       translateLocal(translateVector)
-       scaleLocal(Vector3f(1f,1f,1f))
+        translateLocal(translateVector)
+        scaleLocal(Vector3f(1f,1f,1f))
 
         super.init(camera)
         var vertexArray: MutableList<Vertex> = mutableListOf()
@@ -112,7 +111,6 @@ class PowerUp(koordinatenVektor: Vector3f) : Renderable() {
         powerup.setTexParams(GL11.GL_REPEAT, GL11.GL_REPEAT, GL11.GL_LINEAR_MIPMAP_LINEAR, GL11.GL_LINEAR)
         var powerupMaterial = Material(powerup, powerup, powerup, 60f, Vector2f(1.0f, 1.0f))
 
-        //Create renderable
         val mesh = Mesh(vertexdata, indexdata, vertexAttributes, powerupMaterial )
         this.myMeshes.add(mesh)
 

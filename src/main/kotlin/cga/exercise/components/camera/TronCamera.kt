@@ -14,7 +14,6 @@ class TronCamera(var aspectratio: Aspectratio = Aspectratio.WIDESCREEN,
                  var far: Float = 1000.0f) : Transformable() {
 
 
-    //we do a view matrix update only when needed
     fun calculateViewMatrix(): Matrix4f {
         return Matrix4f().lookAt(getWorldPosition(), getWorldPosition().sub(getWorldZAxis()), getWorldYAxis())
     }

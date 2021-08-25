@@ -25,6 +25,4 @@ class Game(width: Int,
 
     override fun render(dt: Float, t: Float) = scene.render(dt, t)
 
-    override fun onKey(key: Int, scancode: Int, action: Int, mode: Int) = scene.onKey(key, scancode, action, mode)
-
 }

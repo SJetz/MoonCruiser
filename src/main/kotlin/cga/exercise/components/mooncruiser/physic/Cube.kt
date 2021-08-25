@@ -12,7 +12,6 @@ open class Cube() : Transformable(){
     private var defaultSize : Vector3f = Vector3f(1f,1f,1f)
     var globalPosition : Vector3f = Vector3f()
     var globalRotation : Matrix3f = Matrix3f(cos(2f),-sin(2f),0f, sin(2f),cos(2f),0f,0f,0f,1f)
-    var formerRotation : Matrix4f = Matrix4f()
     var formerSize : Vector3f = Vector3f(1f,1f,1f)
     var formerPosition : Vector3f = Vector3f(0f,0f,0f)
     var trigger : Boolean = false
@@ -72,10 +71,6 @@ init {
             (Vector3f(position.x-(0.5f*defaultSize.x),position.y+(0.5f*defaultSize.y),position.z-(0.5f*defaultSize.z))).mul(globalRotation)
         )
 
-    }
-
-    override fun rotateAroundPoint(pitch: Float, yaw: Float, roll: Float, altMidpoint: Vector3f) {
-        super.rotateAroundPoint(pitch, yaw, roll, altMidpoint)
     }
 
     override fun scaleLocal(scale: Vector3f){
